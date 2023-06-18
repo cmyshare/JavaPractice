@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!--MyBatis配置文件-->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.open.easyexcel.mapper.UserNumberMapper">
+
+    <resultMap id="UserNumberResultMap" type="com.open.easyexcel.model.UserNumber" >
+        <id column="id" property="id" jdbcType="BIGINT" />
+        <result column="company_id" property="companyId" jdbcType="BIGINT" />
+        <result column="user_num" property="userNum" jdbcType="VARCHAR" />
+        <result column="the_company_id" property="theCompanyId" jdbcType="BIGINT" />
+        <result column="address_detail" property="addressDetail" jdbcType="VARCHAR" />
+        <result column="village_name" property="villageName" jdbcType="VARCHAR" />
+    </resultMap>
+
+<!--    <select id="getUserList" resultMap="UserNumberResultMap">-->
+<!--        select id,company_id,user_num,address_detail,village_name from t_user_number-->
+<!--    </select>-->
+</mapper>

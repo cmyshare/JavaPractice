@@ -1,0 +1,43 @@
+server:
+  port: 8880
+
+spring:
+  application:
+    name: rabbitMQ-Demo
+  cloud:
+    stream:
+      #RabbitMQ服务器地址配置
+      binders:
+        windrabbit:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                addresses: localhost
+                port: 15672
+                username: guest
+                password: guest
+      bindings:
+        delay-output:
+          destination: delay.exchange
+          binder: windrabbit
+          content-type: application/json
+          group: delay-order
+          # 当前消息超过ttl时间，会生成一个死信队列delay-order.dlq。
+          # 新建一个订单支付超时取消的消费者把死信队列中的信息消费掉
+          producer:
+            requiredGroups: delay-order
+        delay-input:
+          destination: delay.exchange
+          binder: windrabbit
+          content-type: application/json
+          group: delay-order
+      #这一部分是给上边声明的bindings添加配置的，例如队列的ttl，还有要不要给队列配置死信队列
+      rabbit:
+        bindings:
+          delay-output:
+            producer:
+              #队列里的消息如果120000ms之后还没被消费，就会成为死信，这个参数生效的前提是spring.cloud.stream.bindings里边声明了requiredGroups
+              ttl: 5000
+              #这个参数为true的时候会自动为当前的队列创建一个死信队列，以dlq结尾
+              autoBindDlq: true
