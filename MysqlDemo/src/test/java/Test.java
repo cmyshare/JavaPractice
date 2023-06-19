@@ -1,14 +1,11 @@
 
-import com.open.mysql.dao.PersonMapper;
+import com.open.mysql.mapper.PersonMapper;
 import com.open.mysql.model.Person;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.sql.*;
 
-/**
- * Created by 14978 on 2017/6/25.
- */
 public class Test {
     private long begin = 34212001;//起始id
     private long end = begin+100000;//每次循环插入的数据量

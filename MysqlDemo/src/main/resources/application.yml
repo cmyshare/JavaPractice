@@ -1,0 +1,43 @@
+server:
+  port: 8080
+
+spring:
+  # 服务名称
+  application:
+    name: MysqlDemo
+  # 数据库配置
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    druid:
+      # 主库数据源
+      master:
+        url: jdbc:mysql://localhost:3306/mysql_demo?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
+        username: root
+        password: 123456
+      # 从库数据源
+      slave:
+        # 从数据源开关/默认关闭
+        enabled: false
+        url:
+        username:
+        password:
+      # 初始连接数
+      initialSize: 0
+      # 最大连接数量
+      maxActive: 20
+      # 最大连接池数量
+      maxIdle: 20
+      # 最小连接池数量
+      minIdle: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+
+# MyBatis配置
+mybatis:
+  # 搜索指定包别名
+  typeAliasesPackage: com.open.**.model
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapperLocations: classpath:mapper/*.xml
+  # 加载全局的配置文件
+  configLocation: classpath:mybatis/mybatis-config.xml

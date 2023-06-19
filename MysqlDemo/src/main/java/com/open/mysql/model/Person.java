@@ -1,8 +1,6 @@
 package com.open.mysql.model;
 
-/**
- * Created by 14978 on 2017/6/25.
- */
+
 public class Person {
     private long id;
     private String name;
