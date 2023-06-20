@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8888
 
 spring:
   # 服务名称
@@ -9,19 +9,10 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/mysql_demo?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8&rewriteBatchedStatements=true&useServerPrepStmts=false
+    username: root
+    password: 123456
     druid:
-      # 主库数据源
-      master:
-        url: jdbc:mysql://localhost:3306/mysql_demo?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8
-        username: root
-        password: 123456
-      # 从库数据源
-      slave:
-        # 从数据源开关/默认关闭
-        enabled: false
-        url:
-        username:
-        password:
       # 初始连接数
       initialSize: 0
       # 最大连接数量
@@ -36,8 +27,8 @@ spring:
 # MyBatis配置
 mybatis:
   # 搜索指定包别名
-  typeAliasesPackage: com.open.**.model
-  # 配置mapper的扫描，找到所有的mapper.xml映射文件
-  mapperLocations: classpath:mapper/*.xml
+  type-aliases-package: com.open.mysql.model
   # 加载全局的配置文件
-  configLocation: classpath:mybatis/mybatis-config.xml
+  config-location: classpath:/mybatis/mybatis-config.xml
+  # 配置mapper的扫描，找到所有的mapper.xml映射文件
+  mapper-locations: classpath:/mapper/*.xml

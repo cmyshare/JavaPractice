@@ -1,9 +1,14 @@
+package com.open.mysql;
+
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * 身份证自动生成
+ */
 public class IdCardGenerator {
 
     public static final Map<String, Integer> areaCode = new HashMap<String, Integer>();
