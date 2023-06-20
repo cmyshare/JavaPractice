@@ -11,6 +11,7 @@
         <module name="LeetCodeDemo" />
         <module name="CodeGenerateDemo" />
         <module name="MysqlDemo" />
+        <module name="MongodbDemo" />
         <module name="RabbitMQDemo" />
         <module name="ToolDemo" />
         <module name="ActivitiDemo" />

@@ -21,6 +21,7 @@
         <module>ToolDemo</module>
         <module>CodeGenerateRyDemo</module>
         <module>MysqlDemo</module>
+        <module>MongodbDemo</module>
     </modules>
 
     <properties>
