@@ -22,6 +22,8 @@
         <module>CodeGenerateRyDemo</module>
         <module>MysqlDemo</module>
         <module>MongodbDemo</module>
+        <module>RocketMQDemo</module>
+        <module>XxlJobDemo</module>
     </modules>
 
     <properties>

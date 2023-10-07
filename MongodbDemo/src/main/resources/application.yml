@@ -1,0 +1,10 @@
+servlet:
+  port: 8080
+
+spring:
+  name: MongodbDemo
+  data:
+    mongodb:
+      uri:
+        # 地址/数据库名
+        mongodb://127.0.0.1:27017/MongoDB

@@ -7,17 +7,19 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="RabbitMQDemo" />
+        <module name="ToolDemo" />
+        <module name="RedisDemo" />
+        <module name="RocketMQDemo" />
         <module name="CodeGenerateRyDemo" />
         <module name="LeetCodeDemo" />
         <module name="CodeGenerateDemo" />
         <module name="MysqlDemo" />
         <module name="MongodbDemo" />
-        <module name="RabbitMQDemo" />
-        <module name="ToolDemo" />
         <module name="ActivitiDemo" />
         <module name="NettyDemo" />
+        <module name="XxlJobDemo" />
         <module name="WebSocketDemo" />
-        <module name="RedisDemo" />
         <module name="EasyExcelDemo" />
       </profile>
     </annotationProcessing>
