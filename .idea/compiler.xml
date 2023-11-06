@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="xxl-job-core" />
         <module name="RabbitMQDemo" />
         <module name="ToolDemo" />
         <module name="RedisDemo" />
@@ -18,10 +19,17 @@
         <module name="MongodbDemo" />
         <module name="ActivitiDemo" />
         <module name="NettyDemo" />
-        <module name="XxlJobDemo" />
+        <module name="ScheduledTaskDemo" />
         <module name="WebSocketDemo" />
         <module name="EasyExcelDemo" />
+        <module name="xxl-job-admin" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="untitled" target="1.8" />
+      <module name="xxl-job-executor-sample-frameless" target="1.8" />
+      <module name="xxl-job-executor-sample-springboot" target="1.8" />
+      <module name="xxl-job-executor-samples" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>
