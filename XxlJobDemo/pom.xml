@@ -16,6 +16,8 @@
     <modules>
         <module>xxl-job-core</module>
         <module>xxl-job-admin</module>
+        <module>xxl-job-native</module>
+        <module>xxl-job-frame</module>
     </modules>
 
     <properties>

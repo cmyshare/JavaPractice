@@ -9,6 +9,8 @@
 	<artifactId>xxl-job-admin</artifactId>
 	<packaging>jar</packaging>
 
+	<description>xxl-job监控平台</description>
+
 	<dependencies>
 
 		<!-- starter-web：spring-webmvc + autoconfigure + logback + yaml + tomcat -->

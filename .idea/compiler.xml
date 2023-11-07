@@ -8,11 +8,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="xxl-job-core" />
+        <module name="xxl-job-native" />
         <module name="RabbitMQDemo" />
         <module name="ToolDemo" />
         <module name="RedisDemo" />
         <module name="RocketMQDemo" />
         <module name="CodeGenerateRyDemo" />
+        <module name="xxl-job-frame" />
         <module name="LeetCodeDemo" />
         <module name="CodeGenerateDemo" />
         <module name="MysqlDemo" />
@@ -30,6 +32,7 @@
       <module name="xxl-job-executor-sample-frameless" target="1.8" />
       <module name="xxl-job-executor-sample-springboot" target="1.8" />
       <module name="xxl-job-executor-samples" target="1.8" />
+      <module name="xxl-job-test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>
