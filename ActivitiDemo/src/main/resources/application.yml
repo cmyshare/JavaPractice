@@ -1,6 +1,7 @@
 server:
   port: 8080
-pring:
+
+spring:
   datasource:
     url: jdbc:mysql://localhost:3306/activiti?useUnicode=true&characterEncoding=utf8&nullCatalogMeansCurrent=true
     username: root
@@ -20,7 +21,7 @@ pring:
     #    audit: 默认值，在activiti基础上同步变量值，保存表单属性
     #    full: 性能较差，记录所有实例和变量细节变化，最完整的历史记录，如果需要日后跟踪详细可以开启full（一般不建议开启）
     history-level: full
-    deployment-mode:  never-fail # 关闭自动部署SpringAutoDeployment
+    deployment-mode: never-fail # 关闭自动部署SpringAutoDeployment
     #校验流程文件，默认校验resources 目录下的 process里的流程 文件
 #    check-process-definitions: false
 # project manifest path
