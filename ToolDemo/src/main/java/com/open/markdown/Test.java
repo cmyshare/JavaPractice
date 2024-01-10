@@ -1,5 +1,8 @@
 package com.open.markdown;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * @author cmy
  * @version 1.0
@@ -12,5 +15,21 @@ public class Test {
         String s2="^[/#clientId].*[/)]$";
         String s = s1.replaceAll("#clientId.*[/)]", ")");
         System.out.println(s);
+
+
+            Integer i=2;
+            System.out.println(i.equals(2));
+            System.out.println(2==i);
+
+        List<Integer> splitLongIds = Arrays.asList(1,2,3,4,5,6,7,8,9);
+        splitLongIds.forEach(f->{
+            System.out.println("**************************"+f);
+            if (f==5){
+                System.out.println("**************************跳出数字5**************************************" +f);
+                return;
+            }
+
+        });
+
     }
 }

@@ -28,5 +28,4 @@ public class UserController {
     public String hello(@RequestParam("code") String code) {
         return "hello~  授权码 code 为：" + code;
     }
-
 }

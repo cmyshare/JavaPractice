@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
-public interface UserMapper  {
+public interface UserMapper {
 
     /**
      * 根据用户名称查询
