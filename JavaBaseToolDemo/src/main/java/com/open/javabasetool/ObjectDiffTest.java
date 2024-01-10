@@ -3,6 +3,9 @@ package com.open.javabasetool;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.builder.DiffResult;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * @version 1.0
  * @Author cmy
@@ -23,17 +26,41 @@ public class ObjectDiffTest {
      * @param args
      */
     public static void main(String[] args) {
+
         Student student = new Student();
         student.setName("123");
         student.setSex(1);
+        List<User> users1 = new ArrayList<>();
         User user1 = new User();
         user1.setName("456");
         user1.setAge(22);
+        users1.add(user1);
         User user2 = new User();
         user2.setName("789");
         user2.setAge(23);
+        users1.add(user2);
 
-        DiffResult result = user1.diff(user2);
-        log.info("result -> {}", result);
+        List<User> users2 = new ArrayList<>();
+        User user3 = new User();
+        user3.setName("147");
+        user3.setAge(25);
+        users2.add(user3);
+        User user4 = new User();
+        user4.setName("258");
+        user4.setAge(24);
+        users2.add(user4);
+
+        Users users11 = new Users();
+        users11.setName("159");
+        users11.setAge(24);
+        users11.setUsers(users1);
+        Users users22 = new Users();
+        users22.setName("357");
+        users22.setAge(27);
+        users22.setUsers(users2);
+
+        DiffResult result = users11.diff(users22);
+        //getDiffs以二维数组方式输出每个字段的变化情况
+        log.info("result -> {}", result.getDiffs());
     }
 }
