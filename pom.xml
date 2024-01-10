@@ -25,6 +25,7 @@
         <module>RocketMQDemo</module>
         <module>ScheduledTaskDemo</module>
         <module>XxlJobDemo</module>
+        <module>JavaBaseToolDemo</module>
     </modules>
 
     <properties>

@@ -23,6 +23,7 @@
         <module name="NettyDemo" />
         <module name="ScheduledTaskDemo" />
         <module name="WebSocketDemo" />
+        <module name="JavaBaseToolDemo" />
         <module name="EasyExcelDemo" />
         <module name="xxl-job-admin" />
       </profile>
