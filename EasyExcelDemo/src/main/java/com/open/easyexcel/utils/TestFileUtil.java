@@ -18,7 +18,7 @@ public class TestFileUtil {
 
     public static String getPath() {
         //自定义数据excel路径
-        return "F:\\IDEA2022\\workmenu\\easyExcelDemo\\src\\main\\java\\com\\easyexcel\\data\\";
+        return "D:\\SoftStart\\idea2021\\ideaSave\\JavaPractice\\EasyExcelDemo\\src\\main\\java\\com\\open\\easyexcel\\data";
         //获取当前编译target路径
         //return TestFileUtil.class.getResource("/").getPath();
     }

@@ -13,7 +13,9 @@ import java.io.DataOutputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -57,7 +59,7 @@ public class SampleXxlJob {
     @XxlJob("shardingJobHandler")
     public void shardingJobHandler() throws Exception {
 
-        // 分片参数
+        // 分片参数,获取当前节点的index与总节点数
         int shardIndex = XxlJobHelper.getShardIndex();
         int shardTotal = XxlJobHelper.getShardTotal();
         XxlJobHelper.log("分片参数：当前分片序号 = {}, 总分片数 = {}", shardIndex, shardTotal);
@@ -76,6 +78,25 @@ public class SampleXxlJob {
             logger.info("--------------------------------------------------------");
         }
 
+        // 业务逻辑，根据总分片数循环，分片广播进行100个用户重置
+        List<Integer> userIds = this.getUserIds();
+        userIds.stream().forEach(id ->{
+            if(id % shardTotal == shardIndex){
+                logger.info("该数据的userId = {}", id);
+            }
+        });
+    }
+
+    /**
+     * 模拟100个用户数据
+     * @return
+     */
+    private List<Integer> getUserIds() {
+        List<Integer> userIds = new ArrayList<>();
+        for(int i = 0; i < 100 ; i++){
+            userIds.add(i + 1);
+        }
+        return userIds;
     }
 
 
