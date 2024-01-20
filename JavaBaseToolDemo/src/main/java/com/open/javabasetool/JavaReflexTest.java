@@ -25,12 +25,12 @@ public class JavaReflexTest {
         //获取操作类
         System.out.println(aClass.getName());
         //循环获取类中定义的所有方法
-        for (Method method : aClass.getMethods()){
+        for (Method method : aClass.getMethods()) {
             //获取单个方法
             System.out.println("method:" + method.getName() + "");
         }
         //循环获取类中定义的所有属性及其属性值
-        for (Field field : aClass.getDeclaredFields()){
+        for (Field field : aClass.getDeclaredFields()) {
             //输出单个属性
             System.out.println("field:" + field.getName() + "");
             //如果属性是私有的，需要设置为可访问
