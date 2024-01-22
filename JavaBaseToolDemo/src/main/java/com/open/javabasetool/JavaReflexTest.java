@@ -3,6 +3,9 @@ package com.open.javabasetool;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @version 1.0
@@ -13,8 +16,16 @@ import java.lang.reflect.Method;
 public class JavaReflexTest {
     public static void main(String[] args) throws Exception {
         Student student = new Student();
+        student.setId(123456L);
         student.setName("123");
         student.setSex(1);
+        student.setIds(new Long[]{1L, 2L, 3L});
+        List<User> users=new ArrayList<>();
+        User user = new User();
+        user.setAge(26);
+        user.setName("cmy");
+        users.add(user);
+        student.setUsers(users);
 
         /**
          * Java反射机制提供了一种在运行时检查和操作类、方法和属性的能力。通过反射，我们可以在运行时获取类的信息，包括属性的名称、类型和注释等。
@@ -26,8 +37,8 @@ public class JavaReflexTest {
         System.out.println(aClass.getName());
         //循环获取类中定义的所有方法
         for (Method method : aClass.getMethods()) {
-            //获取单个方法
-            System.out.println("method:" + method.getName() + "");
+            ////获取单个方法
+            //System.out.println("method:" + method.getName() + "");
         }
         //循环获取类中定义的所有属性及其属性值
         for (Field field : aClass.getDeclaredFields()) {

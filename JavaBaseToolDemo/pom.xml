@@ -37,9 +37,8 @@
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
         <dependency>
-            <groupId>jdk.tools</groupId>
-            <artifactId>jdk.tools</artifactId>
-            <scope>system</scope>
+            <groupId>com.sun</groupId>
+            <artifactId>tools</artifactId>
         </dependency>
     </dependencies>
 
