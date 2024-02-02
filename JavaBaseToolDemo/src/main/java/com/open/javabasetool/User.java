@@ -20,8 +20,8 @@ public class User implements Diffable<User> {
     public DiffResult diff(User obj) {
         // No need for null check, as NullPointerException correct if obj is null
         return new DiffBuilder(this, obj, ToStringStyle.JSON_STYLE)
-                .append("name", this.name, obj.name)
-                .append("age", this.age, obj.age)
+                .append("名称", this.name, obj.name)
+                .append("年龄", this.age, obj.age)
                 .build();
     }
 }

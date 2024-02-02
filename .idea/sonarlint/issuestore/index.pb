@@ -45,8 +45,6 @@ p
 @RedisDemo/src/main/java/com/open/redis/RedisWorkApplication.java,6\7\67bcbd160637c2751dae3ef19ad3bd65149ba19e
 D
 RocketMQDemo/pom.xml,9\5\95fb75103e5f81a2f5475a0ca8d590e887efd57c
-A
-RedisDemo/pom.xml,5\6\564c784c7e6f389b10b52231cbc21d9af94eb4d5
 –
 fXxlJobDemo/xxl-job-admin/src/main/java/com/xxl/job/admin/controller/interceptor/CookieInterceptor.java,6\f\6f7e6578cea53a25d8aaf7aecf08ce967c350496
 T
@@ -410,3 +408,15 @@ I
 [ScheduledTaskDemo/src/main/java/com/cmyshare/open/springscheduled/HelloSpringScheduled.java,1\c\1c6f083e65b7e516f7c3275cd17d2bb83b14addd
 ƒ
 SScheduledTaskDemo/src/main/java/com/cmyshare/open/config/SpringScheduledConfig.java,6\5\655a012092dbe045d9731860814502973996800c
+€
+PXxlJobDemo/xxl-job-core/src/main/java/com/xxl/job/core/context/XxlJobHelper.java,7\9\792d55720f93f88b2a632829f007ecb9c1ca8a5e
+r
+BEasyExcelDemo/src/main/java/com/open/easyexcel/test/WriteTest.java,4\3\43ba0296919a964f07d91ebd62682b8d81d8c643
+…
+UXxlJobDemo/xxl-job-frame/src/main/java/com/cmyshare/open/jobhandler/SampleXxlJob.java,5\8\58f68b613274b505351de116f5ee256bd0c770d1
+‡
+WXxlJobDemo/xxl-job-frame/src/main/java/com/cmyshare/open/XxlJobExecutorApplication.java,a\e\ae37ca488c8a150dad56f0676157b2c95745cea2
+v
+FEasyExcelDemo/src/main/java/com/open/easyexcel/utils/TestFileUtil.java,e\f\ef2ca85d4cce932206dca907a39c764b1fe13ed9
+A
+RedisDemo/pom.xml,5\6\564c784c7e6f389b10b52231cbc21d9af94eb4d5
