@@ -1,4 +1,4 @@
-package com.open.javabasetool;
+package com.open.javabasetool.objectdiffone;
 
 import lombok.extern.slf4j.Slf4j;
 

@@ -1,4 +1,4 @@
-package com.open.javabasetool;
+package com.open.javabasetool.objectdiffone;
 
 import lombok.Data;
 import org.apache.commons.lang3.builder.DiffBuilder;
