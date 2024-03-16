@@ -1,7 +1,6 @@
-package com.open.javabasetool;
+package com.open.javabasetool.objectdiffone;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.builder.DiffResult;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,11 +9,11 @@ import java.util.List;
  * @version 1.0
  * @Author cmy
  * @Date 2024/1/10 21:45
- * @desc CommonLang的对象比较器DiffBuilder
+ * @desc 对象比较方案1：CommonLang的对象比较器DiffBuilder
  */
 
 @Slf4j
-public class ObjectDiffTest {
+public class ObjectDiffDemoOne {
     /**
      * Common Lang 中的 Builder 包内提供了一个 DiffBuilder 类，可以比较两个对象，并返回不同的部分。
      * 首先在要比较对象的类中实现 Diffable 接口，然后实现 DiffResult diff(T obj)  方法。
@@ -53,14 +52,23 @@ public class ObjectDiffTest {
         Users users11 = new Users();
         users11.setName("159");
         users11.setAge(24);
-        users11.setUsers(users1);
+        users11.setUserList(users1);
         Users users22 = new Users();
         users22.setName("357");
         users22.setAge(27);
-        users22.setUsers(users2);
+        users22.setUserList(users2);
 
-        DiffResult result = users11.diff(users22);
+        //DiffResult result = users11.diff(users22);
+        ////getDiffs以二维数组方式输出每个字段的变化情况
+        //log.info("result -> {}", result.getDiffs());
+
+        List<Object> objects = users11.returnDiff(users22);
         //getDiffs以二维数组方式输出每个字段的变化情况
-        log.info("result -> {}", result.getDiffs());
+        log.info("result -> {}", objects);
+
+        //Iterator<Diff<Users>> iterator = result.iterator();
+        //while (iterator.hasNext()) {
+        //    System.out.println(iterator.next().getType());
+        //}
     }
 }

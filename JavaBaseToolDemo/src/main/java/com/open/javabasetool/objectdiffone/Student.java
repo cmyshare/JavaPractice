@@ -1,11 +1,10 @@
-package com.open.javabasetool;
+package com.open.javabasetool.objectdiffone;
 
 import lombok.Data;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * @version 1.0
