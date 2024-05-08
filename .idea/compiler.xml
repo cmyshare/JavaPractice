@@ -13,6 +13,7 @@
         <module name="ToolDemo" />
         <module name="RedisDemo" />
         <module name="RocketMQDemo" />
+        <module name="ImageDemo" />
         <module name="CodeGenerateRyDemo" />
         <module name="xxl-job-frame" />
         <module name="LeetCodeDemo" />

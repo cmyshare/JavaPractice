@@ -26,6 +26,7 @@
         <module>ScheduledTaskDemo</module>
         <module>XxlJobDemo</module>
         <module>JavaBaseToolDemo</module>
+        <module>ImageDemo</module>
     </modules>
 
     <properties>
