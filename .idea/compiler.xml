@@ -11,6 +11,7 @@
         <module name="xxl-job-native" />
         <module name="RabbitMQDemo" />
         <module name="ToolDemo" />
+        <module name="OfficeDemo" />
         <module name="RedisDemo" />
         <module name="RocketMQDemo" />
         <module name="ImageDemo" />
