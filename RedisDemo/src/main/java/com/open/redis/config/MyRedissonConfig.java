@@ -20,10 +20,11 @@ public class MyRedissonConfig {
 
     /**
      * 所有对Redisson的使用都是通过RedissonClient
+     *
      * @return
      * @throws IOException
      */
-    @Bean(destroyMethod="shutdown")
+    @Bean(destroyMethod = "shutdown")
     public RedissonClient redisson() throws IOException {
         //1、创建配置
         Config config = new Config();
