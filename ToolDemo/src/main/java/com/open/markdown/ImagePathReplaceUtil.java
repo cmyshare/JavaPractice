@@ -17,6 +17,9 @@ import java.nio.file.Paths;
  *   tihuanTO：替换内容
  *
  * 说明：想要将md文件中的1替换为2，那么被替换内容就是1、替换内容就是2
+ * 参考地址：
+ * https://juejin.cn/post/7148467853715308580
+ * https://blog.csdn.net/qq_50735979/article/details/126027189
  *
  * @author cmy
  * @version 1.0
