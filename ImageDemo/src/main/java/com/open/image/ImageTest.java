@@ -8,8 +8,16 @@ package com.open.image;
  */
 public class ImageTest {
     public static void main(String[] args) {
-        OperateImage operateImage = new OperateImage();
-        String[] pics={"D:\\intellij2020-1\\idea\\JavaPractice\\ImageDemo\\src\\main\\java\\com\\open\\image\\spacex1.jpg","D:\\intellij2020-1\\idea\\JavaPractice\\ImageDemo\\src\\main\\java\\com\\open\\image\\spacex2.jpg"};
-        boolean jpeg = operateImage.joinImageListVertical(pics, "JPEG", "D:\\intellij2020-1\\idea\\JavaPractice\\ImageDemo\\src\\main\\java\\com\\open\\image\\spacex3.jpg");
+        //OperateImage operateImage = new OperateImage();
+        //String[] pics={"D:\\SoftStart\\idea2021\\ideaSave\\JavaPractice\\ImageDemo\\src\\main\\java\\com\\open\\image\\spacex1.jpg",
+        //        "D:\\SoftStart\\idea2021\\ideaSave\\JavaPractice\\ImageDemo\\src\\main\\java\\com\\open\\image\\spacex2.jpg"};
+        //boolean jpeg = operateImage.joinImageListVertical(pics, "JPEG",
+        //        "D:\\SoftStart\\idea2021\\ideaSave\\JavaPractice\\ImageDemo\\src\\main\\java\\com\\open\\image\\spacex3.jpg");
+
+        StringBuffer sb = new StringBuffer();
+        String jsonStr = sb.toString();
+        System.out.println("-------"+jsonStr+"-------");
+
+        System.out.println(1==null);
     }
 }

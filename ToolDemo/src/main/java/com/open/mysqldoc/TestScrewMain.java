@@ -27,17 +27,17 @@ import java.util.Collections;
  */
 
 public class TestScrewMain {
-    private static final String DB_URL = "jdbc:mysql://192.168.0.123:3306";
-    private static final String DB_NAME = "import_lcrh?useUnicode=true&characterEncoding=UTF-8&serverTimezone=Asia/Shanghai";
+    private static final String DB_URL = "jdbc:mysql://";
+    private static final String DB_NAME = "?characterEncoding=UTF-8&useSSL=false&useUnicode=true&serverTimezone=UTC";
     private static final String DB_USERNAME = "root";
-    private static final String DB_PASSWORD = "brt_root_123456";
-    private static final String FILE_OUTPUT_DIR = "C:\\Users\\Administrator\\Desktop\\";
+    private static final String DB_PASSWORD = "";
+    private static final String FILE_OUTPUT_DIR = "C:\\Users\\10056\\Desktop\\开发管理";
 
     // 可以设置 Word 或者 Markdown 格式
     private static final EngineFileType FILE_OUTPUT_TYPE = EngineFileType.WORD;
-    private static final String DOC_FILE_NAME = "旧燃气数据库表设计文档";
+    private static final String DOC_FILE_NAME = "商品中台数据库表设计文档";
     private static final String DOC_VERSION = "V1.0.0";
-    private static final String DOC_DESCRIPTION = "旧燃气数据库表设计描述";
+    private static final String DOC_DESCRIPTION = "商品中台数据库表设计描述";
 
     public static void main(String[] args) {
         // 创建 screw 的配置

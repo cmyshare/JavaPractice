@@ -27,7 +27,6 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
  * @version 1.0
  * @date 2024/5/8 21:34
  * @description TODO (新增图片格式  新增自动识别xywh四点切割 原有方法思路不变)
- * https://blog.csdn.net/weixin_44922964/article/details/120927427
  */
 public class OperateImage {
 
