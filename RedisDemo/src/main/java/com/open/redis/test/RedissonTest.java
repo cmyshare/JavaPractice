@@ -28,6 +28,7 @@ public class RedissonTest {
 
     /**
      * 8.1. 可重入锁（Reentrant Lock）
+     *
      * @return
      */
     @ResponseBody
@@ -54,7 +55,11 @@ public class RedissonTest {
         // internalLockLeaseTime主流(看门狗时间)
         try {
             System.out.println("加锁成功，执行业务..." + Thread.currentThread().getId());
-            try { TimeUnit.SECONDS.sleep(20); } catch (InterruptedException e) { e.printStackTrace(); }
+            try {
+                TimeUnit.SECONDS.sleep(20);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -76,6 +81,7 @@ public class RedissonTest {
      * 写 + 写 ：阻塞方式
      * 读 + 写 ：有读锁。写也需要等待
      * 只要有读或者写的存都必须等待
+     *
      * @return
      */
     @GetMapping(value = "/write")
@@ -91,7 +97,7 @@ public class RedissonTest {
             rLock.lock();
             s = UUID.randomUUID().toString();
             ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
-            ops.set("writeValue",s);
+            ops.set("writeValue", s);
             TimeUnit.SECONDS.sleep(10);
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -102,8 +108,10 @@ public class RedissonTest {
 
         return s;
     }
+
     /**
      * 8.5. 读写锁（ReadWriteLock）
+     *
      * @return
      */
     @GetMapping(value = "/read")
@@ -119,7 +127,11 @@ public class RedissonTest {
             rLock.lock();
             ValueOperations<String, String> ops = stringRedisTemplate.opsForValue();
             s = ops.get("writeValue");
-            try { TimeUnit.SECONDS.sleep(10); } catch (InterruptedException e) { e.printStackTrace(); }
+            try {
+                TimeUnit.SECONDS.sleep(10);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -156,6 +168,7 @@ public class RedissonTest {
 
         return "ok=>" + flag;
     }
+
     @GetMapping(value = "/go")
     @ResponseBody
     public String go() {
@@ -185,6 +198,7 @@ public class RedissonTest {
         door.await();
         return "放假了...";
     }
+
     @GetMapping(value = "/gogogo/{id}")
     @ResponseBody
     public String gogogo(@PathVariable("id") Long id) {

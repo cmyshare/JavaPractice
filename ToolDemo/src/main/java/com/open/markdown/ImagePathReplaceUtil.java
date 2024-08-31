@@ -17,6 +17,9 @@ import java.nio.file.Paths;
  *   tihuanTO：替换内容
  *
  * 说明：想要将md文件中的1替换为2，那么被替换内容就是1、替换内容就是2
+ * 参考地址：
+ * https://juejin.cn/post/7148467853715308580
+ * https://blog.csdn.net/qq_50735979/article/details/126027189
  *
  * @author cmy
  * @version 1.0
@@ -33,8 +36,11 @@ public class ImagePathReplaceUtil {
     private static String COPY_TO = "F:\\Typora123\\Typora保存";
 
 
-    //被替换内容 正则表达式以&clientId开头,以)结束 #clientId.*[/)]
+    //语雀图片后缀1，被替换内容 正则表达式以&clientId开头,以)结束 #clientId.*[/)]
     private static String tihuan = "&clientId.*[/)]";
+
+    //语雀图片后缀2，被替换内容 正则表达式以&clientId开头,以)结束 #clientId.*[/)]
+    private static String tihuan2 = "#averageHue.*[/)]";
 
     //替换内容
     private static String tihuanTO = ")";
@@ -55,6 +61,7 @@ public class ImagePathReplaceUtil {
                     if (targetFile.contains(".md")){
                         //执行替换任务
                         doWork(originFile, targetFile, tihuan, tihuanTO);
+                        doWork(originFile, targetFile, tihuan2, tihuanTO);
                         System.out.println(targetFile + "已经覆盖完成!");
                     }else{
                         Files.copy(path, Paths.get(targetFile));

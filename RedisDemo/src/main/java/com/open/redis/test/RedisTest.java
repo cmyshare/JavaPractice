@@ -14,10 +14,10 @@ import java.util.concurrent.TimeUnit;
  * @version 1.0
  * @date 2023/4/23 22:54
  * @description Redis缓存测试类
- *
+ * <p>
  * Redis 常用的数据结构有哪些？
  * 5 种基础数据结构 ：String（字符串）、List（列表）、Set（集合）、Hash（散列）、Zset（有序集合）。
- *
+ * <p>
  * 3 种特殊数据结构 ：HyperLogLogs（基数统计）、Bitmap （位存储）、Geospatial (地理位置)。
  * BitMap（2.2 版新增）：二值状态统计的场景，比如签到、判断用户登陆状态、连续签到用户总数等；
  * HyperLogLog（2.8 版新增）：海量数据基数统计的场景，比如百万级网页 UV 计数等；
@@ -30,14 +30,14 @@ public class RedisTest {
     /**
      * Spring Boot Data(数据) Redis 中提供了 RedisTemplate 和 StringRedisTemplate；
      * StringRedisTemplate 是 RedisTemplate 的子类，两个方法基本一致，不同之处在于 操作的数据类型不同：
-     *
+     * <p>
      * RedisTemplate 两个泛型都是 Object，意味着存储的 key 和 value 都可以是一个对象
      * StringRedisTemplate 两个泛型都是 String，意味着存储的 的 key 和 value 都只能是字符串。
      * 注：使用 RedisTemplate 默认是将对象序列化到 Redis 中，所以 放入的对象必须实现对象序列化接口。
-     *
+     * <p>
      * 注：两者的 数据是不共通的；也就是说 StringRedisTemplate 只能管理 StringRedisTemplate 里面的数据，
      * RedisTemplate 只能管理 RedisTemplate 中的数据。
-     *
+     * <p>
      * https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/core/RedisTemplate.html
      */
     @Autowired
@@ -49,16 +49,17 @@ public class RedisTest {
     /**
      * 添加string方法，写入字符串“Hello World!”，然后读取该字符串并返回该字符串
      * https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/core/ValueOperations.html
-     *
+     * <p>
      * String 类型的应用场景：缓存对象、常规计数、分布式锁setnx、共享 session 信息等
+     *
      * @return
      */
     @GetMapping("/string")
-    public String stringTest(){
+    public String stringTest() {
         //TODO 基础操作
         //set(K key, V value, long timeout, TimeUnit unit)
         //设置value和过期timeout时间key
-        redisTemplate.opsForValue().set("str","Hello World!", 60,TimeUnit.SECONDS);
+        redisTemplate.opsForValue().set("str", "Hello World!", 60, TimeUnit.SECONDS);
         //获取键为key对应的value
         String str = (String) redisTemplate.opsForValue().get("str");
 
@@ -76,18 +77,19 @@ public class RedisTest {
     /**
      * 添加list方法，双向链表，左右添加。
      * https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/core/ListOperations.html
-     *
+     * <p>
      * List 类型的应用场景：消息队列（但是有两个问题：1. 生产者需要自行实现全局唯一 ID；2. 不能以消费组形式消费数据）等。
+     *
      * @return
      */
     @GetMapping("/list")
-    public List<String> listTest(){
+    public List<String> listTest() {
         //TODO 基础操作
         //Redis 列表具体操作。
         ListOperations<String, String> listOperations = redisTemplate.opsForList();
         //从左边添加
-        listOperations.leftPush("list","left");
-        listOperations.leftPush("list","left1");
+        listOperations.leftPush("list", "left");
+        listOperations.leftPush("list", "left1");
         //从右边添加
         listOperations.rightPush("list", "right");
         listOperations.rightPush("list", "right1");
@@ -108,12 +110,13 @@ public class RedisTest {
     /**
      * 添加set方法，去重集合
      * https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/core/SetOperations.html
-     *
+     * <p>
      * Set类型应用场景：聚合计算（并集、交集、差集）场景，比如点赞、共同关注、抽奖活动等。
+     *
      * @return
      */
     @GetMapping("/set")
-    public Set<String> setTest(){
+    public Set<String> setTest() {
         //TODO 基础操作
         SetOperations<String, String> setOperations = redisTemplate.opsForSet();
         //add(K key, V... values) 添加元素
@@ -136,12 +139,13 @@ public class RedisTest {
     /**
      * 添加zset方法，有序集合，根据socre默认升序排序
      * https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/core/ZSetOperations.html
-     *
+     * <p>
      * Zset类型应用场景：排序场景，比如排行榜、电话和姓名排序等。
+     *
      * @return
      */
     @GetMapping("/zset")
-    public Set<String> zsetTest(){
+    public Set<String> zsetTest() {
         //TODO 基础操作
         ZSetOperations<String, String> zSetOperations = redisTemplate.opsForZSet();
         //添加value到 的排序集key，或者如果它已经存在则更新它score。
@@ -162,20 +166,21 @@ public class RedisTest {
     /**
      * 添加hash方法
      * https://docs.spring.io/spring-data/redis/docs/current/api/org/springframework/data/redis/core/HashOperations.html
-     *
+     * <p>
      * Hash类型应用场景：缓存对象、购物车等。
+     *
      * @return
      */
     @GetMapping("/hash")
-    public String hashTest(){
+    public String hashTest() {
         //TODO 基础操作
         //Redis 映射在哈希上工作的特定操作
         HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
         //put(H key, HK hashKey, HV value) 设置value哈希的hashKey。
-        hashOperations.put("key","hashKey","Hello");
+        hashOperations.put("key", "hashKey", "Hello");
         //hashKey从处的散列中获取given的值key
         String s = hashOperations.get("key", "hashKey");
-        System.out.println("hashKey从处的散列中获取given的值key"+s);
+        System.out.println("hashKey从处的散列中获取given的值key" + s);
 
         //TODO 缓存对象 Hash类型的（key，field， value）的结构与对象的（对象id， 属性， 值）的结构相似
 
