@@ -18,6 +18,6 @@ public class ImageTest {
         String jsonStr = sb.toString();
         System.out.println("-------"+jsonStr+"-------");
 
-        System.out.println(1==null);
+        //System.out.println(1==null);
     }
 }
