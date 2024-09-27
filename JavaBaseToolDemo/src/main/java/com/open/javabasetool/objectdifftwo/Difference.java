@@ -8,7 +8,13 @@ import java.io.Serializable;
 public class Difference implements Serializable {
     private static final long serialVersionUID = 2321642126795290L;
 
+    /**
+     * 旧值
+     */
     private Object oldValue;
+    /**
+     * 新值
+     */
     private Object newValue;
 
 

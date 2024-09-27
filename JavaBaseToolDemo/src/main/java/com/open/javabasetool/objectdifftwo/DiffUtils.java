@@ -7,6 +7,9 @@ import java.util.List;
  * @param <T>
  */
 public class DiffUtils<T> {
+    /**
+     * 操作类型
+     */
     public final static String CHANGE = "CHANGE";
     public final static String REMOVE = "REMOVE";
     public final static String ADD = "ADD";
@@ -33,7 +36,7 @@ public class DiffUtils<T> {
         if (oldStr==null && newStr!=null){
             op = ADD;
         }
-        return new DiffWapper(path,nameCn,op,new Difference(oldStr,newStr));
+            return new DiffWapper(path,nameCn,op,new Difference(oldStr,newStr));
     }
 
 

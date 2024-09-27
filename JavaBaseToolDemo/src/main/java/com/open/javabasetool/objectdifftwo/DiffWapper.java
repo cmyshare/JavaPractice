@@ -8,9 +8,21 @@ import java.io.Serializable;
  */
 public class DiffWapper implements Serializable {
     private static final long serialVersionUID = -3232326683473741L;
+    /**
+     * 路径
+     */
     private String path;
+    /**
+     * 日志名称
+     */
     private String logName;
+    /**
+     * 操作类型
+     */
     private String op = "";
+    /**
+     * 基础差别类Difference
+     */
     private Difference diffValue;
 
     public DiffWapper(String path, String logName, String op, Difference diffValue) {
