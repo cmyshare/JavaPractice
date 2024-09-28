@@ -33,8 +33,6 @@ C
 MysqlDemo/README.md,e\7\e73bcb14e16850c3e5f7eba6cca3ec8fbe83e4b8
 C
 MongodbDemo/pom.xml,0\8\08188e138e21d8bca7ad80df7aca9daede27dbe8
-p
-@RedisDemo/src/main/java/com/open/redis/RedisWorkApplication.java,6\7\67bcbd160637c2751dae3ef19ad3bd65149ba19e
 ñ
 fXxlJobDemo/xxl-job-admin/src/main/java/com/xxl/job/admin/controller/interceptor/CookieInterceptor.java,6\f\6f7e6578cea53a25d8aaf7aecf08ce967c350496
 T
@@ -472,8 +470,6 @@ h
 8ImageDemo/src/main/java/com/open/image/OperateImage.java,5\0\50d50f93df6f0cb8998a0769271f7b87a86dea2a
 e
 5ImageDemo/src/main/java/com/open/image/ImageTest.java,7\6\76957b856439e8b3ef63c1c6015105deb5915210
-A
-RedisDemo/pom.xml,5\6\564c784c7e6f389b10b52231cbc21d9af94eb4d5
 E
 EasyExcelDemo/pom.xml,3\1\31b0f1e818450886ab1054ab8f5bc142b43469ec
 |
@@ -490,3 +486,11 @@ SJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/model/BeanC.
 SJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/model/BeanB.java,e\0\e0c8de5f56534a2d13da767c3e74dcbe5e9a8482
 ä
 ZJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/AbstractObjectDiff.java,6\e\6ee2237b07078616539501fe827381f14372fb6a
+É
+SJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/model/BeanA.java,d\5\d5fa478ebc625eee78cd710c5e5bcf02f30aca45
+â
+YJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/ObjectDiffTestTwo.java,1\6\16db554418c0cebad4fb81d26823485a7475b9ac
+H
+JavaBaseToolDemo/pom.xml,4\0\4056423775e45dcdb6e72af186011091f73e83f7
+Å
+QJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectcopy/BeanUtilTest.java,8\d\8db2139ca774d6faadc988e36e8ec7b09ebce006

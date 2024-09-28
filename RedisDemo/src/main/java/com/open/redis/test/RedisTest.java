@@ -3,6 +3,7 @@ package com.open.redis.test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -72,6 +73,37 @@ public class RedisTest {
         //TODO 共享Session信息 Redis对这些Session信息进行统一的存储和管理
 
         return str;
+    }
+
+    /**
+     * key模糊搜索的到keys
+     */
+    @GetMapping("/keyLikeQuery")
+    public Set<String> keyLikeQuery(@RequestParam("searchStr") String searchStr) {
+        //keys方法可能会在 Redis 中进行全量的键扫描，这在大型数据集的情况下可能会非常耗时。如果可能的话，可以考虑使用其他更高效的方法来实现类似的功能，例如使用 Redis 的SCAN命令。
+        Set<String> keys = redisTemplate.keys("*" + searchStr + "*");
+        return keys;
+    }
+
+    /**
+     * key模糊搜索的到keys-SCAN命令
+     */
+    @GetMapping("/keyLikeQueryTwo")
+    public Set<String> keyLikeQueryTwo(@RequestParam("searchStr") String searchStr) {
+        //Set<String> resultKeys = new HashSet<>();
+        //String cursor = "0";
+        //do {
+        //    ScanParams params = new ScanParams();
+        //    params.match("*" + searchStr + "*");
+        //    ScanResult<String> scanResult = (ScanResult<String>) redisTemplate.execute((RedisCallback<ScanResult<String>>) connection -> {
+        //        ScanResult<String> result = connection.scan(cursor, params);
+        //        cursor = result.getStringCursor();
+        //        return result;
+        //    });
+        //    resultKeys.addAll(scanResult.getResult());
+        //} while (!cursor.equals("0"));
+        //return resultKeys;
+        return null;
     }
 
     /**
