@@ -16,13 +16,13 @@ import java.util.List;
 public class BeanA {
 
 
-    @DiffLog(name = "测试a")
+    @DiffLog(name = "字符串a")
     private String a;
 
-    @DiffLog(name = "测试b", ignore = true)
+    @DiffLog(name = "字符串b", ignore = true)
     private String b;
 
-    @DiffLog(name = "BList集合")
+    @DiffLog(name = "集合B")
     private List<BeanB> bList;
 
     @DiffLog(name = "开始时间",dateFormat = "yyyy-MM-dd hh:mm:ss")
@@ -31,22 +31,22 @@ public class BeanA {
     @DiffLog(name = "价格")
     private BigDecimal price;
 
-    @DiffLog(name = "bit")
+    @DiffLog(name = "比特")
     private Byte bit;
 
-    @DiffLog(name = "aBoolean")
+    @DiffLog(name = "是否")
     private Boolean aBoolean;
 
-    @DiffLog(name = "时间LocalDateTime")
+    @DiffLog(name = "时间")
     private LocalDateTime localDateTime;
 
-    @DiffLog(name = "short")
+    @DiffLog(name = "单位")
     private Short unit;
 
-    @DiffLog(name = "beanC")
+    @DiffLog(name = "对象C")
     private BeanC beanC;
 
-    @DiffLog(name = "beanE")
+    @DiffLog(name = "对象E")
     private BeanE beanE;
 
     public BeanA(String a, String b, List<BeanB> bList) {

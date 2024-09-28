@@ -26,6 +26,7 @@ public class ObjectDiffTestTwo {
 
     private static void test() throws Exception{
 
+        //对象1
         BeanB a1b = new BeanB(1L,"北京",new Date());
         a1b.setConsumptionLimit(false);
         BeanB a1b3 = new BeanB(3L,"3",new Date());
@@ -50,10 +51,10 @@ public class ObjectDiffTestTwo {
         a1.setBeanE(a1e);
         a1.setaBoolean(false);
         a1.setLocalDateTime(LocalDateTime.now());
+        a1.setPrice(new BigDecimal("10.23"));
 
-        //        a1.setPrice(new BigDecimal("10.23"));
 
-
+        //对象2
         BeanB a2b = new BeanB(1L,"上海",new Date());
         BeanB a2b2 = new BeanB(2L,"2",new Date());
 
@@ -63,7 +64,7 @@ public class ObjectDiffTestTwo {
 
         BeanE a2e = new BeanE(2L,"e2");
 
-        final BeanA a2 = new BeanA("2","2",null);
+        BeanA a2 = new BeanA("2","2",null);
         a2.setPrice(new BigDecimal("50.852236"));
         a2.setBit(new Byte("22"));
         a2.setUnit(new Short("99"));
