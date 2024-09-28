@@ -15,15 +15,32 @@ import java.util.*;
  */
 public abstract class AbstractObjectDiff {
 
+    /**
+     * 空字段数组
+     */
     public static final Field[] EMPTY_FIELD_ARRAY = {};
 
     protected abstract String genDiffStr(Object sourceObject, Object targetObject) throws Exception;
 
+    /**
+     * 输出中文日志格式方法
+     * @param sourceObject
+     * @param targetObject
+     * @return
+     * @throws Exception
+     */
     public static String genChineseDiffStr(Object sourceObject, Object targetObject) throws Exception {
         List<DiffWapper> diffWappers = generateDiff(sourceObject, targetObject);
         return DiffUtils.genDiffStr(diffWappers);
     }
 
+    /**
+     * 输出默认英文日志格式方法
+     * @param sourceObject
+     * @param targetObject
+     * @return
+     * @throws Exception
+     */
     public static List<DiffWapper> generateDiff(Object sourceObject, Object targetObject) throws Exception {
         return generateDiff("", "", sourceObject, targetObject);
     }
@@ -152,7 +169,6 @@ public abstract class AbstractObjectDiff {
         }
         return diffWappers;
     }
-
 
 
     private static DiffWapper generateOneDiffs(String path, String nameCn, Field field, Object source, Object target)
