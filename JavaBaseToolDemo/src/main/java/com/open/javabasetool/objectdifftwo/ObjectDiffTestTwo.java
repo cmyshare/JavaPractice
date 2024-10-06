@@ -20,7 +20,6 @@ import java.util.List;
 @Data
 public class ObjectDiffTestTwo {
     public static void main(String[] args) throws Exception{
-
         test();
     }
 

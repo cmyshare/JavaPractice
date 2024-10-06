@@ -2,7 +2,6 @@ package com.open.javabasetool.objectdifftwo;
 
 import org.apache.commons.lang3.StringUtils;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
@@ -27,6 +26,7 @@ public abstract class AbstractObjectDiff {
 
     /**
      * 输出中文日志格式方法
+     *
      * @param sourceObject
      * @param targetObject
      * @return
@@ -39,6 +39,7 @@ public abstract class AbstractObjectDiff {
 
     /**
      * 输出默认英文日志格式方法
+     *
      * @param sourceObject
      * @param targetObject
      * @return
@@ -49,7 +50,7 @@ public abstract class AbstractObjectDiff {
     }
 
     private static List<DiffWapper> generateDiff(String path, String cnName, Object sourceObject, Object targetObject)
-        throws Exception {
+            throws Exception {
         List<DiffWapper> diffWappers = new ArrayList<>();
 
         if (sourceObject == null && targetObject == null) {
@@ -58,8 +59,8 @@ public abstract class AbstractObjectDiff {
 
         if (sourceObject == null || targetObject == null) {
             DiffWapper diffWapper = DiffUtils
-                .getDiffWapper(path, cnName, (sourceObject == null ? null : getObjectString(sourceObject)),
-                    targetObject == null ? null : getObjectString(targetObject));
+                    .getDiffWapper(path, cnName, (sourceObject == null ? null : getObjectString(sourceObject)),
+                            targetObject == null ? null : getObjectString(targetObject));
             diffWappers.add(diffWapper);
             return diffWappers;
         }
@@ -88,10 +89,10 @@ public abstract class AbstractObjectDiff {
                 } else {
                     nameCn = cnName + "." + logVo.name();
                 }
-                if (logVo.ignore()){
+                if (logVo.ignore()) {
                     continue;
                 }
-            }else{
+            } else {
                 continue;
             }
             if (Collection.class.isAssignableFrom(type)) {
@@ -119,7 +120,7 @@ public abstract class AbstractObjectDiff {
                         break;
                     }
                 }
-                if (keyField == null){
+                if (keyField == null) {
                     continue;
                 }
                 keyField.setAccessible(true);
@@ -154,7 +155,7 @@ public abstract class AbstractObjectDiff {
                 }
             } else {
                 //判断是否java内部类
-                if (isJavaClass(type)){
+                if (isJavaClass(type)) {
                     DiffWapper diffWapper = generateOneDiffs(newPath, nameCn, field, sourceObject, targetObject);
                     if (diffWapper != null) {
                         diffWappers.add(diffWapper);
@@ -162,7 +163,7 @@ public abstract class AbstractObjectDiff {
                 } else {
                     //如自定义bean则走递归方法
                     List<DiffWapper> collectDiff = generateDiff(newPath, nameCn,
-                        field.get(sourceObject), field.get(targetObject));
+                            field.get(sourceObject), field.get(targetObject));
                     if (collectDiff != null) {
                         diffWappers.addAll(collectDiff);
                     }
@@ -175,7 +176,7 @@ public abstract class AbstractObjectDiff {
 
 
     private static DiffWapper generateOneDiffs(String path, String nameCn, Field field, Object source, Object target)
-        throws Exception {
+            throws Exception {
         //判断是普通Object还是Collection
         //过滤一些不需要的key
         //Collection需要根据某个key进行排序,然后比较
@@ -187,14 +188,14 @@ public abstract class AbstractObjectDiff {
         String dateFormat = "";
         if (logVo != null) {
             dateFormat = logVo.dateFormat();
-            if (logVo.ignore()){
+            if (logVo.ignore()) {
                 return null;
             }
         }
         Class dictEnum = null;
         if (logVo != null) {
             dictEnum = logVo.dictEnum();
-            if (logVo.ignore()){
+            if (logVo.ignore()) {
                 return null;
             }
         }
@@ -204,7 +205,7 @@ public abstract class AbstractObjectDiff {
             return diffUtils.get(path, nameCn, oldStr, newStr);
         } else if ("java.sql.Timestamp".equals(typeName)) {
             DateFormat format =
-                new SimpleDateFormat(StringUtils.isBlank(dateFormat) ? "yyyy-MM-dd HH:mm:ss" : dateFormat);
+                    new SimpleDateFormat(StringUtils.isBlank(dateFormat) ? "yyyy-MM-dd HH:mm:ss" : dateFormat);
             java.sql.Timestamp newTime = (java.sql.Timestamp) field.get(target);
             java.sql.Timestamp oldTime = (java.sql.Timestamp) field.get(source);
             String newTempTimeStr = "";
@@ -219,7 +220,7 @@ public abstract class AbstractObjectDiff {
                 return null;
             }
             if (oldTime == null || newTime == null) {
-                return DiffUtils.getDiffWapper(path, nameCn, oldTime==null ?null:oldTimeTimeStr, newTime==null?null: newTempTimeStr);
+                return DiffUtils.getDiffWapper(path, nameCn, oldTime == null ? null : oldTimeTimeStr, newTime == null ? null : newTempTimeStr);
             }
 
             if (!StringUtils.equals(newTempTimeStr, oldTimeTimeStr)) {
@@ -255,14 +256,14 @@ public abstract class AbstractObjectDiff {
             return diffUtils.get(path, nameCn, oldValue, newValue);
 
         } else if ("java.lang.Boolean".equals(typeName) || Boolean.TYPE == type) {
-            Boolean oldValue = (Boolean)field.get(source);
-            Boolean newValue = (Boolean)field.get(target);
+            Boolean oldValue = (Boolean) field.get(source);
+            Boolean newValue = (Boolean) field.get(target);
             return diffUtils.get(path, nameCn, oldValue, newValue);
 
         } else if ("java.math.BigDecimal".equals(typeName)) {
-            BigDecimal oldValue = (BigDecimal)field.get(source);
-            BigDecimal newValue = (BigDecimal)field.get(target) ;
-            if (oldValue!=null && newValue!=null && oldValue.compareTo(newValue) == 0){
+            BigDecimal oldValue = (BigDecimal) field.get(source);
+            BigDecimal newValue = (BigDecimal) field.get(target);
+            if (oldValue != null && newValue != null && oldValue.compareTo(newValue) == 0) {
                 newValue = oldValue;
             }
             return diffUtils.get(path, nameCn, oldValue, newValue);
@@ -270,14 +271,14 @@ public abstract class AbstractObjectDiff {
             //预留不处理
             Byte oldValue = (Byte) field.get(source);
             Byte newValue = (Byte) field.get(target);
-            if (oldValue!=null && newValue!=null && oldValue.compareTo(newValue) == 0){
+            if (oldValue != null && newValue != null && oldValue.compareTo(newValue) == 0) {
                 newValue = oldValue;
             }
             return diffUtils.get(path, nameCn, oldValue, newValue);
         } else if ("java.lang.Short".equals(typeName) || Short.TYPE == type) {
             Short oldValue = (Short) field.get(source);
             Short newValue = (Short) field.get(target);
-            if (oldValue!=null && newValue!=null && oldValue.compareTo(newValue) == 0){
+            if (oldValue != null && newValue != null && oldValue.compareTo(newValue) == 0) {
                 newValue = oldValue;
             }
             return diffUtils.get(path, nameCn, oldValue, newValue);
@@ -288,12 +289,11 @@ public abstract class AbstractObjectDiff {
             return diffUtils.get(path, nameCn, oldValue, newValue);
 
         } else if ("java.lang.Double".equals(typeName) || Double.TYPE == type) {
-            String oldValue = field.get(source) == null? null :String.valueOf(field.get(source));
-            String newValue =  field.get(target) == null ? null :String.valueOf(field.get(target));
+            String oldValue = field.get(source) == null ? null : String.valueOf(field.get(source));
+            String newValue = field.get(target) == null ? null : String.valueOf(field.get(target));
             return diffUtils.get(path, nameCn, oldValue, newValue);
 
-        }
-        else if ("java.util.Date".equals(typeName)) {
+        } else if ("java.util.Date".equals(typeName)) {
             DateFormat format = new SimpleDateFormat(StringUtils.isBlank(dateFormat) ? "yyyy-MM-dd" : dateFormat);
             Date newTime = (Date) field.get(target);
             Date oldTime = (Date) field.get(source);
@@ -309,14 +309,13 @@ public abstract class AbstractObjectDiff {
                 return null;
             }
             if (oldTime == null || newTime == null) {
-                return DiffUtils.getDiffWapper(path, nameCn, oldTime==null ?null:oldTimeTimeStr, newTime==null?null: newTempTimeStr);
+                return DiffUtils.getDiffWapper(path, nameCn, oldTime == null ? null : oldTimeTimeStr, newTime == null ? null : newTempTimeStr);
             }
             if (!StringUtils.equals(newTempTimeStr, oldTimeTimeStr)) {
                 return DiffUtils.getDiffWapper(path, nameCn, oldTimeTimeStr, newTempTimeStr);
             }
-        }
-        else if ("java.time.LocalDateTime".equals(typeName)) {
-            DateTimeFormatter format =  DateTimeFormatter.ofPattern(StringUtils.isBlank(dateFormat) ? "yyyy-MM-dd hh:mm:ss" : dateFormat);
+        } else if ("java.time.LocalDateTime".equals(typeName)) {
+            DateTimeFormatter format = DateTimeFormatter.ofPattern(StringUtils.isBlank(dateFormat) ? "yyyy-MM-dd hh:mm:ss" : dateFormat);
             java.time.LocalDateTime newTime = (java.time.LocalDateTime) field.get(target);
             java.time.LocalDateTime oldTime = (java.time.LocalDateTime) field.get(source);
             String newTempTimeStr = "";
@@ -331,7 +330,7 @@ public abstract class AbstractObjectDiff {
                 return null;
             }
             if (oldTime == null || newTime == null) {
-                return DiffUtils.getDiffWapper(path, nameCn, oldTime==null ?null:oldTimeTimeStr, newTime==null?null: newTempTimeStr);
+                return DiffUtils.getDiffWapper(path, nameCn, oldTime == null ? null : oldTimeTimeStr, newTime == null ? null : newTempTimeStr);
             }
             if (!StringUtils.equals(newTempTimeStr, oldTimeTimeStr)) {
                 return DiffUtils.getDiffWapper(path, nameCn, oldTimeTimeStr, newTempTimeStr);
@@ -367,21 +366,21 @@ public abstract class AbstractObjectDiff {
                 logList.add(logStr);
             } else if ("java.util.Date".equals(typeName)) {
                 DateFormat format =
-                    new SimpleDateFormat(StringUtils.isBlank(dateFormat) ? "yyyy-MM-dd HH:mm:ss" : dateFormat);
+                        new SimpleDateFormat(StringUtils.isBlank(dateFormat) ? "yyyy-MM-dd HH:mm:ss" : dateFormat);
                 Date oldTime = (Date) field.get(source);
                 if (oldTime != null) {
                     logStr = "[" + nameCn + "]=" + format.format(oldTime) + " ";
                     logList.add(logStr);
                 }
             } else {
-                Object oldValue = (Object) field.get(source);
+                Object oldValue = field.get(source);
                 logStr = "[" + nameCn + "]=" + (oldValue == null ? "null" : oldValue.toString()) + " ";
                 logList.add(logStr);
             }
 
 
         }
-        return StringUtils.join(logList.iterator(),",").trim();
+        return StringUtils.join(logList.iterator(), ",").trim();
 
     }
 
