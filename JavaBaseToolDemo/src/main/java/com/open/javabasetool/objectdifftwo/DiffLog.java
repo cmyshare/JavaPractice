@@ -21,10 +21,13 @@ public @interface DiffLog {
     String dateFormat() default "";
 
     /**
+     * 字典枚举类 默认空值Integer.class
+     */
+    Class dictEnum() default Integer.class;
+
+    /**
      * 是否忽略该值
      * @return ignore
      */
     boolean ignore() default false;
-
-
 }

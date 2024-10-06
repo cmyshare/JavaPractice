@@ -44,6 +44,7 @@ public class ObjectDiffTestTwo {
         BeanE a1e = new BeanE(1L,"e1");
 
         BeanA a1 = new BeanA("1","1",list);
+        a1.setPlat(3);
         a1.setStart(new Date());
         a1.setBit(new Byte("11"));
         a1.setUnit(new Short("66"));
@@ -52,7 +53,6 @@ public class ObjectDiffTestTwo {
         a1.setaBoolean(false);
         a1.setLocalDateTime(LocalDateTime.now());
         a1.setPrice(new BigDecimal("10.23"));
-
 
         //对象2
         BeanB a2b = new BeanB(1L,"上海",new Date());
@@ -64,7 +64,8 @@ public class ObjectDiffTestTwo {
 
         BeanE a2e = new BeanE(2L,"e2");
 
-        BeanA a2 = new BeanA("2","2",null);
+        BeanA a2 = new BeanA("2","2",list2);
+        a2.setPlat(4);
         a2.setPrice(new BigDecimal("50.852236"));
         a2.setBit(new Byte("22"));
         a2.setUnit(new Short("99"));

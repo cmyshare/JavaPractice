@@ -49,6 +49,9 @@ public class BeanA {
     @DiffLog(name = "对象E")
     private BeanE beanE;
 
+    @DiffLog(name = "平台",dictEnum =PlatType.class)
+    private Integer plat;
+
     public BeanA(String a, String b, List<BeanB> bList) {
         this.a = a;
         this.b = b;
@@ -153,5 +156,13 @@ public class BeanA {
 
     public void setLocalDateTime(LocalDateTime localDateTime) {
         this.localDateTime = localDateTime;
+    }
+
+    public Integer getPlat() {
+        return plat;
+    }
+
+    public void setPlat(Integer plat) {
+        this.plat = plat;
     }
 }

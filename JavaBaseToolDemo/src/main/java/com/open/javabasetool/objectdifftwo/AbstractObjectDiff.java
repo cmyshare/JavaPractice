@@ -1,7 +1,10 @@
 package com.open.javabasetool.objectdifftwo;
 
 import org.apache.commons.lang3.StringUtils;
+
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.math.BigDecimal;
 import java.text.DateFormat;
@@ -188,6 +191,13 @@ public abstract class AbstractObjectDiff {
                 return null;
             }
         }
+        Class dictEnum = null;
+        if (logVo != null) {
+            dictEnum = logVo.dictEnum();
+            if (logVo.ignore()){
+                return null;
+            }
+        }
         if ("java.lang.String".equals(typeName)) {
             String oldStr = (String) field.get(source);
             String newStr = (String) field.get(target);
@@ -221,8 +231,27 @@ public abstract class AbstractObjectDiff {
             return diffUtils.get(path, nameCn, oldValue, newValue);
 
         } else if ("java.lang.Integer".equals(typeName) || Integer.TYPE == type) {
-            Integer oldValue =(Integer) field.get(source);
+            //旧方案
+            //Integer oldValue =(Integer) field.get(source);
+            //Integer newValue = (Integer) field.get(target);
+            //return diffUtils.get(path, nameCn, oldValue, newValue);
+
+            //新方案，增加注解参数放入Class枚举类：dictEnum =PlatType.class
+            Integer oldValue = (Integer) field.get(source);
             Integer newValue = (Integer) field.get(target);
+            if (dictEnum != null && dictEnum != Integer.class) {
+                // 获取枚举类的所有常量
+                for (Object enumConstant : dictEnum.getEnumConstants()) {
+                    Method getNameByType = dictEnum.getDeclaredMethod("getNameByType", Integer.class);
+                    String oldName = (String) getNameByType.invoke(enumConstant, oldValue);
+                    String newName = (String) getNameByType.invoke(enumConstant, newValue);
+                    // 如果找到了匹配的值，返回差异
+                    if (oldName != null && newName != null) {
+                        return diffUtils.get(path, nameCn, oldName, newName);
+                    }
+                }
+            }
+            // 如果没有找到匹配的值，或者 dictEnum 为空，直接返回旧值和新值
             return diffUtils.get(path, nameCn, oldValue, newValue);
 
         } else if ("java.lang.Boolean".equals(typeName) || Boolean.TYPE == type) {
