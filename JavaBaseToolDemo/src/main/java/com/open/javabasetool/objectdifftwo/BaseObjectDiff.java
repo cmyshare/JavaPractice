@@ -1,5 +1,6 @@
 package com.open.javabasetool.objectdifftwo;
 
+import cn.hutool.core.util.ObjectUtil;
 import org.apache.commons.lang3.StringUtils;
 
 import java.lang.reflect.Field;
@@ -15,7 +16,7 @@ import java.util.*;
 /**
  * 对象对比基础类AbstractObjectDiff
  */
-public abstract class AbstractObjectDiff {
+public abstract class BaseObjectDiff {
 
     /**
      * 空字段数组
@@ -25,7 +26,7 @@ public abstract class AbstractObjectDiff {
     protected abstract String genDiffStr(Object sourceObject, Object targetObject) throws Exception;
 
     /**
-     * 输出中文日志格式方法
+     * 生成中文Diff
      *
      * @param sourceObject
      * @param targetObject
@@ -33,36 +34,45 @@ public abstract class AbstractObjectDiff {
      * @throws Exception
      */
     public static String genChineseDiffStr(Object sourceObject, Object targetObject) throws Exception {
-        List<DiffWapper> diffWappers = generateDiff(sourceObject, targetObject);
-        return DiffUtils.genDiffStr(diffWappers);
+        List<DiffWrappers> diffWrappers = generateDiff(sourceObject, targetObject);
+        return DiffUtils.genDiffStr(diffWrappers);
     }
 
     /**
-     * 输出默认英文日志格式方法
+     * 生成Diff
      *
      * @param sourceObject
      * @param targetObject
      * @return
      * @throws Exception
      */
-    public static List<DiffWapper> generateDiff(Object sourceObject, Object targetObject) throws Exception {
+    public static List<DiffWrappers> generateDiff(Object sourceObject, Object targetObject) throws Exception {
         return generateDiff("", "", sourceObject, targetObject);
     }
 
-    private static List<DiffWapper> generateDiff(String path, String cnName, Object sourceObject, Object targetObject)
+    /**
+     * 生成Diff
+     * @param path
+     * @param cnName
+     * @param sourceObject
+     * @param targetObject
+     * @return
+     * @throws Exception
+     */
+    private static List<DiffWrappers> generateDiff(String path, String cnName, Object sourceObject, Object targetObject)
             throws Exception {
-        List<DiffWapper> diffWappers = new ArrayList<>();
+        List<DiffWrappers> diffWrappersList = new ArrayList<>();
 
         if (sourceObject == null && targetObject == null) {
             return null;
         }
 
         if (sourceObject == null || targetObject == null) {
-            DiffWapper diffWapper = DiffUtils
-                    .getDiffWapper(path, cnName, (sourceObject == null ? null : getObjectString(sourceObject)),
+            DiffWrappers diffWrappers = DiffUtils
+                    .getDiffWrappers(path, cnName, (sourceObject == null ? null : getObjectString(sourceObject)),
                             targetObject == null ? null : getObjectString(targetObject));
-            diffWappers.add(diffWapper);
-            return diffWappers;
+            diffWrappersList.add(diffWrappers);
+            return diffWrappersList;
         }
 
         //先判断object类型
@@ -148,34 +158,44 @@ public abstract class AbstractObjectDiff {
                     Object newOb = newFilterMap.get(result);
                     String oBPath = newPath + "/" + (result == null ? "null" : result.toString());
                     String oBcnName = nameCn + "." + keyCnName + "[" + (result == null ? "null" : result.toString()) + "]";
-                    List<DiffWapper> collectDiff = generateDiff(oBPath, oBcnName, oldOb, newOb);
+                    List<DiffWrappers> collectDiff = generateDiff(oBPath, oBcnName, oldOb, newOb);
                     if (collectDiff != null) {
-                        diffWappers.addAll(collectDiff);
+                        diffWrappersList.addAll(collectDiff);
                     }
                 }
             } else {
                 //判断是否java内部类
                 if (isJavaClass(type)) {
-                    DiffWapper diffWapper = generateOneDiffs(newPath, nameCn, field, sourceObject, targetObject);
-                    if (diffWapper != null) {
-                        diffWappers.add(diffWapper);
+                    DiffWrappers diffWrappers = generateOneDiffs(newPath, nameCn, field, sourceObject, targetObject);
+                    if (diffWrappers != null) {
+                        diffWrappersList.add(diffWrappers);
                     }
                 } else {
                     //如自定义bean则走递归方法
-                    List<DiffWapper> collectDiff = generateDiff(newPath, nameCn,
+                    List<DiffWrappers> collectDiff = generateDiff(newPath, nameCn,
                             field.get(sourceObject), field.get(targetObject));
                     if (collectDiff != null) {
-                        diffWappers.addAll(collectDiff);
+                        diffWrappersList.addAll(collectDiff);
                     }
                 }
             }
 
         }
-        return diffWappers;
+        return diffWrappersList;
     }
 
 
-    private static DiffWapper generateOneDiffs(String path, String nameCn, Field field, Object source, Object target)
+    /**
+     * 生成一个Diff
+     * @param path
+     * @param nameCn
+     * @param field
+     * @param source
+     * @param target
+     * @return
+     * @throws Exception
+     */
+    private static DiffWrappers generateOneDiffs(String path, String nameCn, Field field, Object source, Object target)
             throws Exception {
         //判断是普通Object还是Collection
         //过滤一些不需要的key
@@ -220,11 +240,11 @@ public abstract class AbstractObjectDiff {
                 return null;
             }
             if (oldTime == null || newTime == null) {
-                return DiffUtils.getDiffWapper(path, nameCn, oldTime == null ? null : oldTimeTimeStr, newTime == null ? null : newTempTimeStr);
+                return DiffUtils.getDiffWrappers(path, nameCn, oldTime == null ? null : oldTimeTimeStr, newTime == null ? null : newTempTimeStr);
             }
 
             if (!StringUtils.equals(newTempTimeStr, oldTimeTimeStr)) {
-                return DiffUtils.getDiffWapper(path, nameCn, format.format(oldTime), format.format(newTime));
+                return DiffUtils.getDiffWrappers(path, nameCn, format.format(oldTime), format.format(newTime));
             }
         } else if ("java.lang.Long".equals(typeName) || Long.TYPE == type) {
             Long oldValue = (Long) field.get(source);
@@ -244,11 +264,13 @@ public abstract class AbstractObjectDiff {
                 // 获取枚举类的所有常量
                 for (Object enumConstant : dictEnum.getEnumConstants()) {
                     Method getNameByType = dictEnum.getDeclaredMethod("getNameByType", Integer.class);
-                    String oldName = (String) getNameByType.invoke(enumConstant, oldValue);
-                    String newName = (String) getNameByType.invoke(enumConstant, newValue);
-                    // 如果找到了匹配的值，返回差异
-                    if (oldName != null && newName != null) {
-                        return diffUtils.get(path, nameCn, oldName, newName);
+                    if (ObjectUtil.isNotEmpty(getNameByType)){
+                        String oldName = (String) getNameByType.invoke(enumConstant, oldValue);
+                        String newName = (String) getNameByType.invoke(enumConstant, newValue);
+                        // 如果找到了匹配的值，返回差异
+                        if (oldName != null && newName != null) {
+                            return diffUtils.get(path, nameCn, oldName, newName);
+                        }
                     }
                 }
             }
@@ -309,10 +331,10 @@ public abstract class AbstractObjectDiff {
                 return null;
             }
             if (oldTime == null || newTime == null) {
-                return DiffUtils.getDiffWapper(path, nameCn, oldTime == null ? null : oldTimeTimeStr, newTime == null ? null : newTempTimeStr);
+                return DiffUtils.getDiffWrappers(path, nameCn, oldTime == null ? null : oldTimeTimeStr, newTime == null ? null : newTempTimeStr);
             }
             if (!StringUtils.equals(newTempTimeStr, oldTimeTimeStr)) {
-                return DiffUtils.getDiffWapper(path, nameCn, oldTimeTimeStr, newTempTimeStr);
+                return DiffUtils.getDiffWrappers(path, nameCn, oldTimeTimeStr, newTempTimeStr);
             }
         } else if ("java.time.LocalDateTime".equals(typeName)) {
             DateTimeFormatter format = DateTimeFormatter.ofPattern(StringUtils.isBlank(dateFormat) ? "yyyy-MM-dd hh:mm:ss" : dateFormat);
@@ -330,16 +352,22 @@ public abstract class AbstractObjectDiff {
                 return null;
             }
             if (oldTime == null || newTime == null) {
-                return DiffUtils.getDiffWapper(path, nameCn, oldTime == null ? null : oldTimeTimeStr, newTime == null ? null : newTempTimeStr);
+                return DiffUtils.getDiffWrappers(path, nameCn, oldTime == null ? null : oldTimeTimeStr, newTime == null ? null : newTempTimeStr);
             }
             if (!StringUtils.equals(newTempTimeStr, oldTimeTimeStr)) {
-                return DiffUtils.getDiffWapper(path, nameCn, oldTimeTimeStr, newTempTimeStr);
+                return DiffUtils.getDiffWrappers(path, nameCn, oldTimeTimeStr, newTempTimeStr);
             }
         }
         return null;
     }
 
 
+    /**
+     * 获取对象字符串
+     * @param source
+     * @return
+     * @throws Exception
+     */
     private static String getObjectString(Object source) throws Exception {
         if (source == null) {
             return "";
@@ -385,11 +413,17 @@ public abstract class AbstractObjectDiff {
     }
 
 
+    /**
+     * 判断Java类
+     * @param clz
+     * @return
+     */
     public static boolean isJavaClass(Class<?> clz) {
         return clz != null && clz.getClassLoader() == null;
     }
 
     /**
+     * 获取所有字段
      * org.apache.commons.lang3.reflect.FieldUtils.getAllFields(),version 3.13.0
      */
     private static Field[] getAllFields(final Class<?> cls) {

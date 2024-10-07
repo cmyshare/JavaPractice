@@ -24,7 +24,6 @@ public class ObjectDiffTestTwo {
     }
 
     private static void test() throws Exception{
-
         //对象1
         BeanB a1b = new BeanB(1L,"北京",new Date());
         a1b.setConsumptionLimit(false);
@@ -43,7 +42,7 @@ public class ObjectDiffTestTwo {
         BeanE a1e = new BeanE(1L,"e1");
 
         BeanA a1 = new BeanA("1","1",list);
-        a1.setPlat(3);
+        a1.setPlat(1);
         a1.setStart(new Date());
         a1.setBit(new Byte("11"));
         a1.setUnit(new Short("66"));
@@ -64,7 +63,7 @@ public class ObjectDiffTestTwo {
         BeanE a2e = new BeanE(2L,"e2");
 
         BeanA a2 = new BeanA("2","2",list2);
-        a2.setPlat(4);
+        a2.setPlat(2);
         a2.setPrice(new BigDecimal("50.852236"));
         a2.setBit(new Byte("22"));
         a2.setUnit(new Short("99"));
@@ -74,8 +73,8 @@ public class ObjectDiffTestTwo {
         a2.setLocalDateTime(LocalDateTime.now().plusSeconds(1000));
 
 
-        List<DiffWapper> diffWappers = AbstractObjectDiff.generateDiff(a1, a2);
-        System.out.println("英文用户操作日志："+ JSON.toJSON(diffWappers));
+        List<DiffWrappers> diffWrappers = BaseObjectDiff.generateDiff(a1, a2);
+        System.out.println("英文用户操作日志："+ JSON.toJSON(diffWrappers));
 
         String s = ChineseObjectDiff.genChineseDiffStr(a1, a2);
 

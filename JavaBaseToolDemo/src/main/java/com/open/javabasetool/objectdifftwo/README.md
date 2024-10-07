@@ -83,7 +83,7 @@ Fast-object-diff就这样诞生.
             list2.add(a2b2);
             final BeanA a2 = new BeanA("2","2",list2);
             a2.setPrice(new BigDecimal("50.852236"));
-            List<DiffWapper> diffWappers = AbstractObjectDiff.generateDiff(a1, a2);
+            List<DiffWapper> diffWrappers = AbstractObjectDiff.generateDiff(a1, a2);
 
 
 ```
@@ -168,8 +168,8 @@ Fast-object-diff就这样诞生.
 public class ChineseObjectDiff extends AbstractObjectDiff {
     @Override
     protected String genDiffStr(Object sourceObject, Object targetObject) throws Exception {
-        List<DiffWapper> diffWappers = generateDiff(sourceObject, targetObject);
-        return DiffUtils.genDiffStr(diffWappers);
+        List<DiffWapper> diffWrappers = generateDiff(sourceObject, targetObject);
+        return DiffUtils.genDiffStr(diffWrappers);
     }
 
 }

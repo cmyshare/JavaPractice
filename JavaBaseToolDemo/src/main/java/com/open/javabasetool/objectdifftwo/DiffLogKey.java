@@ -8,5 +8,10 @@ import java.lang.annotation.RetentionPolicy;
  */
 @Retention(RetentionPolicy.RUNTIME)
 public @interface DiffLogKey {
+    /**
+     * 唯一标识Key
+     *
+     * @return
+     */
     String name() default "id";
 }
