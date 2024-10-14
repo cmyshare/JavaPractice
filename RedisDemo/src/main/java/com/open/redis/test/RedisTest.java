@@ -2,13 +2,20 @@ package com.open.redis.test;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
+import org.springframework.data.redis.core.ScanOptions.ScanOptionsBuilder;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.ScanParams;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 /**
  * @author cmy
@@ -76,35 +83,155 @@ public class RedisTest {
     }
 
     /**
-     * key模糊搜索的到keys
+     * reids全模糊搜索skuNumber模拟数据
      */
-    @GetMapping("/keyLikeQuery")
-    public Set<String> keyLikeQuery(@RequestParam("searchStr") String searchStr) {
-        //keys方法可能会在 Redis 中进行全量的键扫描，这在大型数据集的情况下可能会非常耗时。如果可能的话，可以考虑使用其他更高效的方法来实现类似的功能，例如使用 Redis 的SCAN命令。
-        Set<String> keys = redisTemplate.keys("*" + searchStr + "*");
+    @GetMapping("/addSkuBySkunumber")
+    public Boolean addSkuBySkunumber() {
+        for (int i = 0; i < 5000000; i++) {
+            redisTemplate.opsForValue().set("skuList:" + i + ":" + "商品sku-红-XL" + i, i);
+        }
+        return true;
+    }
+
+    /**
+     * reids全模糊搜索skuNumber
+     */
+    @GetMapping("/searchSkuBySkunumber")
+    public Integer searchSkuBySkunumber(@RequestParam("skuNumber") String skuNumber) {
+
+
+        //方法1
+        //long l = System.currentTimeMillis();
+        //Set<String> keys = redisTemplate.keys("*" + skuNumber + "*");
+        //if (keys == null || keys.isEmpty()) {
+        //    return 0;
+        //}
+        //long l2 = System.currentTimeMillis() - l;
+        //System.out.println("reids全模糊搜索skuNumber耗时:" + l2);
+        //List<String> idList = keys.stream()
+        //        .map(key -> key.split(":")[1])
+        //        .collect(Collectors.toList());
+        //long l3 = System.currentTimeMillis() - l;
+        //System.out.println("reids全模糊搜索skuNumber，取出id耗时:" + l3);
+        //return keys.size();
+
+        //方法2
+        long l = System.currentTimeMillis();
+        Set<String> keys = new HashSet<>();
+        //获取RedisTemplate中用于序列化 Redis 键的序列化器。在与 Redis 进行交互时，需要对键进行序列化和反序列化操作。
+        RedisSerializer serializer = redisTemplate.getKeySerializer();
+        //创建ScanOptions对象来配置SCAN命令的搜索参数。
+        //.match("skuList:" + "*" + skuNumber + "*")指定了搜索的模式。这个模式表示要查找以 “skuList:” 开头，并且后续部分包含skuNumber的键。例如，如果skuNumber是 “123”，那么会查找类似 “skuList:abc123”、“skuList:123def” 等的键。
+        //.count(100000)设置了每次扫描时预期返回的键的数量上限。这里设置为 100000 是一个较大的值，实际返回的数量可能会小于这个值。
+        //.build()构建最终的ScanOptions对象。
+        ScanOptions scanOptions = ScanOptions.scanOptions().match("skuList:" + "*" + skuNumber + "*").count(100000).build();
+        //使用RedisTemplate执行SCAN命令，并传入配置好的ScanOptions。
+        //connection -> connection.scan(scanOptions)是一个 lambda 表达式，它接受一个RedisConnection对象，并在该连接上执行SCAN命令，传入scanOptions以指定搜索参数。
+        //true参数表示在执行命令后自动释放连接资源。
+        //返回的结果是一个Cursor<byte[]>，它代表一个游标，可以遍历搜索到的键。
+        Cursor<byte[]> cursor = (Cursor<byte[]>) redisTemplate.execute(connection -> connection.scan(scanOptions), true);
+        //当游标还有下一个元素时，进入循环。
+        //keys.add(String.valueOf(serializer.deserialize(cursor.next())));在循环中，将游标指向的当前键进行反序列化（使用之前获取的序列化器），并转换为字符串后添加到集合keys中。
+        //if (keys.size() > 100) { break; }如果集合中的键数量超过 100 个，就跳出循环，停止搜索。
+        while (cursor.hasNext()) {
+            Object deserialize = serializer.deserialize(cursor.next());
+            keys.add(String.valueOf(deserialize));
+            if (keys.size() > 100) {
+                break;
+            }
+        }
+        long l2 = System.currentTimeMillis() - l;
+        System.out.println("reids全模糊搜索skuNumber耗时:" + l2);
+        List<String> idList = keys.stream()
+                .map(key -> key.split(":")[1])
+                .collect(Collectors.toList());
+        long l3 = System.currentTimeMillis() - l;
+        System.out.println("reids全模糊搜索skuNumber，取出id耗时:" + l3);
+        System.out.println(idList);
+        return keys.size();
+        //方法2优点
+
+        //三、优点和用途
+        //高效搜索：
+        //使用SCAN命令进行搜索可以避免一次性加载所有的键到内存中，特别是在 Redis 数据库中存储了大量键的情况下，可以提高搜索的效率，减少内存占用。
+        //模糊匹配：
+        //通过指定特定的搜索模式，可以实现模糊匹配，查找符合特定条件的键。这种灵活性适用于各种复杂的搜索需求。
+        //可控制结果数量：
+        //通过设置集合的大小限制，可以控制搜索结果的数量，避免返回过多的键导致性能问题。
+        //通用性：
+        //这段代码可以在各种 Java 应用程序中与 Redis 进行交互时使用，特别是在需要进行特定模式的键搜索的场景中。
+
+        //四、注意事项
+        //搜索模式准确性：
+        //确保搜索模式的准确性，以避免错过需要的键或返回不相关的键。在指定搜索模式时，要考虑到可能的键的格式和变化。
+        //内存使用：
+        //虽然SCAN命令可以减少内存占用，但如果搜索结果仍然很多，集合keys可能会占用一定的内存。在处理大量数据时，需要注意内存限制。
+        //分布式环境：
+        //如果 Redis 是在分布式环境中部署的，SCAN命令可能需要在多个节点上执行，以确保搜索到所有符合条件的键。同时，需要考虑数据一致性和分布式锁等问题。
+        //序列化和反序列化：
+        //确保序列化器的正确配置，以便能够正确地序列化和反序列化 Redis 键。不同的序列化方式可能会影响性能和存储大小。
+    }
+
+    /**
+     * scan方法
+     * @param pattern
+     * @param count
+     * @return https://blog.csdn.net/weixin_58195194/article/details/125530659
+     */
+    public Set<String> scan(String pattern, int count) {
+        Set<String> keys = new HashSet<>();
+        RedisSerializer serializer = redisTemplate.getKeySerializer();
+        ScanOptions scanOptions = ScanOptions.scanOptions().match(pattern).count(count).build();
+        Cursor<byte[]> cursor = (Cursor<byte[]>) redisTemplate.execute(connection -> connection.scan(scanOptions), true);
+        while (cursor.hasNext()) {
+            keys.add(String.valueOf(serializer.deserialize(cursor.next())));
+        }
         return keys;
     }
 
     /**
-     * key模糊搜索的到keys-SCAN命令
+     * reids hash全模糊搜索skuNumber模拟数据
+     * @return
      */
-    @GetMapping("/keyLikeQueryTwo")
-    public Set<String> keyLikeQueryTwo(@RequestParam("searchStr") String searchStr) {
-        //Set<String> resultKeys = new HashSet<>();
-        //String cursor = "0";
-        //do {
-        //    ScanParams params = new ScanParams();
-        //    params.match("*" + searchStr + "*");
-        //    ScanResult<String> scanResult = (ScanResult<String>) redisTemplate.execute((RedisCallback<ScanResult<String>>) connection -> {
-        //        ScanResult<String> result = connection.scan(cursor, params);
-        //        cursor = result.getStringCursor();
-        //        return result;
-        //    });
-        //    resultKeys.addAll(scanResult.getResult());
-        //} while (!cursor.equals("0"));
-        //return resultKeys;
-        return null;
+    @GetMapping("/addHashSkuBySkunumber")
+    public Boolean addHashSkuBySkunumber() {
+        for (int i = 0; i < 5000000; i++) {
+            redisTemplate.opsForHash().put("skuHash:" + "商品sku-红-XL" + i, String.valueOf(i), String.valueOf(i));
+        }
+        return true;
     }
+
+
+    /**
+     * reids hash全模糊搜索skuNumber
+     */
+    @GetMapping("/searchHashSkuBySkunumber")
+    public Integer searchHashSkuBySkunumber(@RequestParam("skuNumber") String skuNumber) {
+        Jedis jedis = null;
+        try {
+            jedis = new Jedis("localhost", 6379);
+            // 方法1
+            long startTime = System.currentTimeMillis();
+            Set<String> keys = jedis.hkeys(("*" + skuNumber + "*"));
+            if (keys == null || keys.isEmpty()) {
+                return 0;
+            }
+            long searchTime = System.currentTimeMillis() - startTime;
+            System.out.println("reids全模糊搜索skuNumber耗时: " + searchTime);
+            List<String> idList = keys.stream()
+                    .map(key -> key.split(":")[1])
+                    .collect(Collectors.toList());
+            long totalTime = System.currentTimeMillis() - startTime;
+            System.out.println("reids全模糊搜索skuNumber，取出 id 耗时: " + totalTime);
+            return keys.size();
+        } finally {
+            if (jedis!= null) {
+                jedis.close();
+            }
+        }
+    }
+
+
 
     /**
      * 添加list方法，双向链表，左右添加。
