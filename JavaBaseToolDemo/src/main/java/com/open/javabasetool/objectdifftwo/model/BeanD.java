@@ -1,6 +1,9 @@
 package com.open.javabasetool.objectdifftwo.model;
 
 import com.open.javabasetool.objectdifftwo.DiffLog;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * Created by colinsu
@@ -8,20 +11,11 @@ import com.open.javabasetool.objectdifftwo.DiffLog;
  * @date 2023/9/19.
  */
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BeanD {
 
     @DiffLog(name = "nameD")
     private String nameD;
-
-    public BeanD(String nameD) {
-        this.nameD = nameD;
-    }
-
-    public String getNameD() {
-        return nameD;
-    }
-
-    public void setNameD(String nameD) {
-        this.nameD = nameD;
-    }
 }

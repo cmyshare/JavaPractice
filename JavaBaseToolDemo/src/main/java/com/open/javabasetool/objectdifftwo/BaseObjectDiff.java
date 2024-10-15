@@ -1,5 +1,6 @@
 package com.open.javabasetool.objectdifftwo;
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.ObjectUtil;
 import org.apache.commons.lang3.StringUtils;
 
@@ -52,6 +53,7 @@ public abstract class BaseObjectDiff {
 
     /**
      * 生成Diff
+     *
      * @param path
      * @param cnName
      * @param sourceObject
@@ -62,7 +64,7 @@ public abstract class BaseObjectDiff {
     private static List<DiffWrappers> generateDiff(String path, String cnName, Object sourceObject, Object targetObject)
             throws Exception {
         List<DiffWrappers> diffWrappersList = new ArrayList<>();
-
+        //判断对比数据空值
         if (sourceObject == null && targetObject == null) {
             return null;
         }
@@ -79,7 +81,7 @@ public abstract class BaseObjectDiff {
         if (!sourceObject.getClass().getName().equals(targetObject.getClass().getName())) {
             return null;
         }
-
+        //判断hash地址
         if (sourceObject.hashCode() == targetObject.hashCode()) {
             return null;
         }
@@ -92,6 +94,7 @@ public abstract class BaseObjectDiff {
             String newPath = path + "/" + field.getName();
             String nameCn = newPath;
             field.setAccessible(true);
+            //是否存在注释
             if (field.isAnnotationPresent(DiffLog.class)) {
                 DiffLog logVo = field.getAnnotation(DiffLog.class);
                 if (cnName == null || cnName.equals("")) {
@@ -156,6 +159,47 @@ public abstract class BaseObjectDiff {
                 for (Object result : resultSet) {
                     Object oldOb = oldFilterMap.get(result);
                     Object newOb = newFilterMap.get(result);
+
+                    //删除和新增，不输出嵌套集合nestedCollect=false
+                    if (ObjectUtil.isEmpty(oldOb) || ObjectUtil.isEmpty(newOb)){
+                        //删除
+                        if (ObjectUtil.isNotEmpty(oldOb)){
+                            Class<?> clazz1 = oldOb.getClass();
+                            Field[] fields1 = clazz1.getDeclaredFields();
+                            for (Field field1 : fields1) {
+                                field1.setAccessible(true);
+                                if (field1.isAnnotationPresent(DiffLog.class)) {
+                                    DiffLog annotation = field1.getAnnotation(DiffLog.class);
+                                    if (!annotation.nestedCollect()) {
+                                        List<Object> fieldValue = ObjectUtil.isNotEmpty(field1.get(oldOb))?(List<Object>) field1.get(oldOb):new ArrayList<>();
+                                        List<String> integerList = new ArrayList<>();
+                                        integerList.add(fieldValue.size()+"条数据");
+                                        field1.set(oldOb, integerList);
+                                        //方案二，根据反射循环这个列表，把每行数据加注解的字段，逐个读取，拼接每行数据
+                                    }
+                                }
+                            }
+                        }
+                        //新增
+                        if (ObjectUtil.isNotEmpty(newOb)){
+                            Class<?> clazz2 = newOb.getClass();
+                            Field[] fields2 = clazz2.getDeclaredFields();
+                            for (Field field2 : fields2) {
+                                field2.setAccessible(true);
+                                if (field2.isAnnotationPresent(DiffLog.class)) {
+                                    DiffLog annotation = field2.getAnnotation(DiffLog.class);
+                                    if (!annotation.nestedCollect()) {
+                                        List<Object> fieldValue = ObjectUtil.isNotEmpty(field2.get(newOb))?(List<Object>) field2.get(newOb):new ArrayList<>();
+                                        List<String> integerList = new ArrayList<>();
+                                        integerList.add(fieldValue.size()+"条数据");
+                                        field2.set(newOb, integerList);
+                                        //方案二，根据反射循环这个列表，把每行数据加注解的字段，逐个读取，拼接每行数据
+                                    }
+                                }
+                            }
+                        }
+                    }
+
                     String oBPath = newPath + "/" + (result == null ? "null" : result.toString());
                     String oBcnName = nameCn + "." + keyCnName + "[" + (result == null ? "null" : result.toString()) + "]";
                     List<DiffWrappers> collectDiff = generateDiff(oBPath, oBcnName, oldOb, newOb);
@@ -163,7 +207,8 @@ public abstract class BaseObjectDiff {
                         diffWrappersList.addAll(collectDiff);
                     }
                 }
-            } else {
+            }
+            else {
                 //判断是否java内部类
                 if (isJavaClass(type)) {
                     DiffWrappers diffWrappers = generateOneDiffs(newPath, nameCn, field, sourceObject, targetObject);
@@ -179,14 +224,15 @@ public abstract class BaseObjectDiff {
                     }
                 }
             }
-
         }
+
         return diffWrappersList;
     }
 
 
     /**
-     * 生成一个Diff
+     * 判断Java类生成一个Diff
+     *
      * @param path
      * @param nameCn
      * @param field
@@ -223,7 +269,8 @@ public abstract class BaseObjectDiff {
             String oldStr = (String) field.get(source);
             String newStr = (String) field.get(target);
             return diffUtils.get(path, nameCn, oldStr, newStr);
-        } else if ("java.sql.Timestamp".equals(typeName)) {
+        }
+        else if ("java.sql.Timestamp".equals(typeName)) {
             DateFormat format =
                     new SimpleDateFormat(StringUtils.isBlank(dateFormat) ? "yyyy-MM-dd HH:mm:ss" : dateFormat);
             java.sql.Timestamp newTime = (java.sql.Timestamp) field.get(target);
@@ -246,12 +293,14 @@ public abstract class BaseObjectDiff {
             if (!StringUtils.equals(newTempTimeStr, oldTimeTimeStr)) {
                 return DiffUtils.getDiffWrappers(path, nameCn, format.format(oldTime), format.format(newTime));
             }
-        } else if ("java.lang.Long".equals(typeName) || Long.TYPE == type) {
+        }
+        else if ("java.lang.Long".equals(typeName) || Long.TYPE == type) {
             Long oldValue = (Long) field.get(source);
             Long newValue = (Long) field.get(target);
             return diffUtils.get(path, nameCn, oldValue, newValue);
 
-        } else if ("java.lang.Integer".equals(typeName) || Integer.TYPE == type) {
+        }
+        else if ("java.lang.Integer".equals(typeName) || Integer.TYPE == type) {
             //旧方案
             //Integer oldValue =(Integer) field.get(source);
             //Integer newValue = (Integer) field.get(target);
@@ -264,7 +313,7 @@ public abstract class BaseObjectDiff {
                 // 获取枚举类的所有常量
                 for (Object enumConstant : dictEnum.getEnumConstants()) {
                     Method getNameByType = dictEnum.getDeclaredMethod("getNameByType", Integer.class);
-                    if (ObjectUtil.isNotEmpty(getNameByType)){
+                    if (ObjectUtil.isNotEmpty(getNameByType)) {
                         String oldName = (String) getNameByType.invoke(enumConstant, oldValue);
                         String newName = (String) getNameByType.invoke(enumConstant, newValue);
                         // 如果找到了匹配的值，返回差异
@@ -277,19 +326,22 @@ public abstract class BaseObjectDiff {
             // 如果没有找到匹配的值，或者 dictEnum 为空，直接返回旧值和新值
             return diffUtils.get(path, nameCn, oldValue, newValue);
 
-        } else if ("java.lang.Boolean".equals(typeName) || Boolean.TYPE == type) {
+        }
+        else if ("java.lang.Boolean".equals(typeName) || Boolean.TYPE == type) {
             Boolean oldValue = (Boolean) field.get(source);
             Boolean newValue = (Boolean) field.get(target);
             return diffUtils.get(path, nameCn, oldValue, newValue);
 
-        } else if ("java.math.BigDecimal".equals(typeName)) {
+        }
+        else if ("java.math.BigDecimal".equals(typeName)) {
             BigDecimal oldValue = (BigDecimal) field.get(source);
             BigDecimal newValue = (BigDecimal) field.get(target);
             if (oldValue != null && newValue != null && oldValue.compareTo(newValue) == 0) {
                 newValue = oldValue;
             }
             return diffUtils.get(path, nameCn, oldValue, newValue);
-        } else if ("java.lang.Byte".equals(typeName) || Byte.TYPE == type) {
+        }
+        else if ("java.lang.Byte".equals(typeName) || Byte.TYPE == type) {
             //预留不处理
             Byte oldValue = (Byte) field.get(source);
             Byte newValue = (Byte) field.get(target);
@@ -297,7 +349,8 @@ public abstract class BaseObjectDiff {
                 newValue = oldValue;
             }
             return diffUtils.get(path, nameCn, oldValue, newValue);
-        } else if ("java.lang.Short".equals(typeName) || Short.TYPE == type) {
+        }
+        else if ("java.lang.Short".equals(typeName) || Short.TYPE == type) {
             Short oldValue = (Short) field.get(source);
             Short newValue = (Short) field.get(target);
             if (oldValue != null && newValue != null && oldValue.compareTo(newValue) == 0) {
@@ -305,17 +358,20 @@ public abstract class BaseObjectDiff {
             }
             return diffUtils.get(path, nameCn, oldValue, newValue);
             //预留不处理 有需要在处理
-        } else if ("java.lang.Float".equals(typeName) || Float.TYPE == type) {
+        }
+        else if ("java.lang.Float".equals(typeName) || Float.TYPE == type) {
             Float oldValue = field.getFloat(source);
             Float newValue = field.getFloat(target);
             return diffUtils.get(path, nameCn, oldValue, newValue);
 
-        } else if ("java.lang.Double".equals(typeName) || Double.TYPE == type) {
+        }
+        else if ("java.lang.Double".equals(typeName) || Double.TYPE == type) {
             String oldValue = field.get(source) == null ? null : String.valueOf(field.get(source));
             String newValue = field.get(target) == null ? null : String.valueOf(field.get(target));
             return diffUtils.get(path, nameCn, oldValue, newValue);
 
-        } else if ("java.util.Date".equals(typeName)) {
+        }
+        else if ("java.util.Date".equals(typeName)) {
             DateFormat format = new SimpleDateFormat(StringUtils.isBlank(dateFormat) ? "yyyy-MM-dd" : dateFormat);
             Date newTime = (Date) field.get(target);
             Date oldTime = (Date) field.get(source);
@@ -336,7 +392,8 @@ public abstract class BaseObjectDiff {
             if (!StringUtils.equals(newTempTimeStr, oldTimeTimeStr)) {
                 return DiffUtils.getDiffWrappers(path, nameCn, oldTimeTimeStr, newTempTimeStr);
             }
-        } else if ("java.time.LocalDateTime".equals(typeName)) {
+        }
+        else if ("java.time.LocalDateTime".equals(typeName)) {
             DateTimeFormatter format = DateTimeFormatter.ofPattern(StringUtils.isBlank(dateFormat) ? "yyyy-MM-dd hh:mm:ss" : dateFormat);
             java.time.LocalDateTime newTime = (java.time.LocalDateTime) field.get(target);
             java.time.LocalDateTime oldTime = (java.time.LocalDateTime) field.get(source);
@@ -358,12 +415,14 @@ public abstract class BaseObjectDiff {
                 return DiffUtils.getDiffWrappers(path, nameCn, oldTimeTimeStr, newTempTimeStr);
             }
         }
+
         return null;
     }
 
 
     /**
      * 获取对象字符串
+     *
      * @param source
      * @return
      * @throws Exception
@@ -415,6 +474,7 @@ public abstract class BaseObjectDiff {
 
     /**
      * 判断Java类
+     *
      * @param clz
      * @return
      */

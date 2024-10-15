@@ -1,5 +1,6 @@
 package com.open.javabasetool.objectdifftwo.model;
 
+import cn.hutool.core.util.ObjectUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -23,6 +24,9 @@ public enum PlatType {
      * @return
      */
     public static String getNameByType(Integer type) {
+        if (ObjectUtil.isEmpty(type)) {
+            return null;
+        }
         for (PlatType e : values()) {
             if (e.getType().intValue() == type) {
                 return e.getName();

@@ -23,14 +23,21 @@ public @interface DiffLog {
     String dateFormat() default "";
 
     /**
-     * 字典枚举类 默认空值Integer.class
+     * 字典枚举类 默认空值Integer.class 枚举类必有getNameByType方法
      */
     Class dictEnum() default Integer.class;
 
     /**
-     * 是否忽略该值
+     * 是否忽略该值 默认否
      *
      * @return ignore
      */
     boolean ignore() default false;
+
+    /**
+     * 嵌套集合是否输出对比 默认是
+     *
+     * @return ignore
+     */
+    boolean nestedCollect() default true;
 }

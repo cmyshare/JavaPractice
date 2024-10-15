@@ -1,5 +1,6 @@
 package com.open.javabasetool.objectdifftwo;
 
+import java.lang.reflect.Field;
 import java.util.List;
 
 /**
@@ -55,13 +56,13 @@ public class DiffUtils<T> {
                 String op = diffWrappers.getOp();
                 String opCn = "修改为";
                 if (op.equals(ADD)) {
-                    opCn = "被添加成";
-                    sb.append(String.format("「%s」%s[%s]", diffWrappers.getLogName(), opCn, diffWrappers.getDiffValue().getNewValue()));
+                    opCn = "添加";
+                    sb.append(String.format("在「%s」下 %s[%s]", diffWrappers.getLogName(), opCn, diffWrappers.getDiffValue().getNewValue()));
                 } else if (op.equals(REMOVE)) {
-                    opCn = "被删除";
-                    sb.append(String.format("「%s」由[%s]%s", diffWrappers.getLogName(), diffWrappers.getDiffValue().getOldValue(), opCn));
+                    opCn = "删除";
+                    sb.append(String.format("在「%s」下 %s[%s]", diffWrappers.getLogName(), opCn, diffWrappers.getDiffValue().getOldValue()));
                 } else {
-                    sb.append(String.format("「%s」由[%s]%s[%s]", diffWrappers.getLogName(), diffWrappers.getDiffValue().getOldValue(), opCn, diffWrappers.getDiffValue().getNewValue()));
+                    sb.append(String.format("「%s」由 [%s]%s[%s]", diffWrappers.getLogName(), diffWrappers.getDiffValue().getOldValue(), opCn, diffWrappers.getDiffValue().getNewValue()));
                 }
                 sb.append("\n");
             }

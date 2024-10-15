@@ -3,15 +3,22 @@ package com.open.javabasetool.objectdifftwo.model;
 
 import com.open.javabasetool.objectdifftwo.DiffLog;
 import com.open.javabasetool.objectdifftwo.DiffLogKey;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by colinsu
  *
  * @date 2019/9/6.
  */
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class BeanB {
 
     @DiffLogKey(name = "订单编号")
@@ -30,69 +37,14 @@ public class BeanB {
     @DiffLog(name = "消费限制")
     private Boolean consumptionLimit;
 
+    @DiffLog(name = "嵌套集合C",nestedCollect = false)
+    private List<BeanC> beanCList;
+
     private double discount;
-
-
 
     public BeanB(Long id, String name,Date startDate) {
         this.id = id;
         this.name = name;
         this.startDate = startDate;
-    }
-
-    public BeanB(Long id, String name, Date startDate, BigDecimal price, double discount) {
-        this.id = id;
-        this.name = name;
-        this.startDate = startDate;
-        this.price = price;
-        this.discount = discount;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Date getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(Date startDate) {
-        this.startDate = startDate;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public double getDiscount() {
-        return discount;
-    }
-
-    public void setDiscount(double discount) {
-        this.discount = discount;
-    }
-
-    public Boolean getConsumptionLimit() {
-        return consumptionLimit;
-    }
-
-    public void setConsumptionLimit(Boolean consumptionLimit) {
-        this.consumptionLimit = consumptionLimit;
     }
 }

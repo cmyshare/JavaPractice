@@ -412,8 +412,6 @@ YJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdiffone/ObjectDiffDe
 QEasyExcelDemo/src/main/java/com/open/easyexcel/dynamictable/DynamicExcelData.java,a\b\abe5cc03ca1c69a4d4643910d458a2d013487539
 ç
 ]EasyExcelDemo/src/main/java/com/open/easyexcel/dynamictable/DynamicTableExportController.java,7\1\718dc31ec08ad42dd0c5d43b1028d27569a496cf
-É
-SJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/model/BeanD.java,6\b\6b813ad612242b36c9674f39a962424ccac8cc3d
 D
 RabbitMQDemo/pom.xml,7\4\74c5badacb308a2625c78d12558588176be19974
 D
@@ -462,10 +460,6 @@ e
 5ImageDemo/src/main/java/com/open/image/ImageTest.java,7\6\76957b856439e8b3ef63c1c6015105deb5915210
 E
 EasyExcelDemo/pom.xml,3\1\31b0f1e818450886ab1054ab8f5bc142b43469ec
-É
-SJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/model/BeanC.java,8\e\8e5c021c115ea0e3666dfd3e79b15a1754285095
-H
-JavaBaseToolDemo/pom.xml,4\0\4056423775e45dcdb6e72af186011091f73e83f7
 Å
 QJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectcopy/BeanUtilTest.java,8\d\8db2139ca774d6faadc988e36e8ec7b09ebce006
 p
@@ -474,9 +468,13 @@ A
 RedisDemo/pom.xml,5\6\564c784c7e6f389b10b52231cbc21d9af94eb4d5
 j
 :RedisDemo/src/main/java/com/open/redis/test/RedisTest.java,1\b\1b63c14ffae35465b3d2c153b6f1cf94694efe45
-É
-SJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/model/BeanE.java,b\7\b7de056c2b75f5a9597d76a6fda80f2d138c7d8d
-Ü
-VJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/model/BeanBase.java,5\7\5774376053e1abdf7dc5e7dee8cd496871a987ef
+|
+LJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/README.md,4\f\4fa0affc1f2710ee2d7cfeb37b39d48dd16f3514
 Ü
 VJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/model/EnumNull.java,4\7\4780498f94779d97040567f0112908fec73ce468
+â
+YJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/ChineseObjectDiff.java,9\0\9091d61e01d009415796e1ed459fd11a03470112
+H
+JavaBaseToolDemo/pom.xml,4\0\4056423775e45dcdb6e72af186011091f73e83f7
+Ç
+RJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/DiffLogKey.java,7\4\744969e600d071844ef9701cc15799db6df5c259
