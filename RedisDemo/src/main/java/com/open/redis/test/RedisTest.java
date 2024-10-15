@@ -1,5 +1,7 @@
 package com.open.redis.test;
 
+import org.redisson.api.RKeys;
+import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.*;
 import org.springframework.data.redis.core.ScanOptions.ScanOptionsBuilder;
@@ -52,7 +54,39 @@ public class RedisTest {
     private RedisTemplate redisTemplate;
 
     @Autowired
+    private RedissonClient redissonClient;
+
+    @Autowired
     private StringRedisTemplate stringRedisTemplate;
+
+    /**
+     * reids全模糊搜索skuNumberRedisson
+     */
+    @GetMapping("/searchSkuBySkunumberRedisson")
+    public Integer searchSkuBySkunumberRedisson(@RequestParam("skuNumber") String skuNumber) {
+        //方法1
+        long l = System.currentTimeMillis();
+        Set<String> keys = new HashSet<>();
+        RKeys redisKeys = redissonClient.getKeys();
+        Iterable<String> keysByPattern = redisKeys.getKeysByPattern("skuList:" + "*" + skuNumber + "*");
+        for (String s : keysByPattern) {
+            keys.add(s);
+            if (keys.size()>100){
+                break;
+            }
+        }
+        long l2 = System.currentTimeMillis() - l;
+        System.out.println("reids全模糊搜索skuNumber耗时:" + l2);
+
+        List<String> idList = keys.stream()
+                .map(key -> key.split(":")[1])
+                .collect(Collectors.toList());
+        long l3 = System.currentTimeMillis() - l;
+        System.out.println("reids全模糊搜索skuNumber，取出id耗时:" + l3);
+
+        return keys.size();
+    }
+
 
     /**
      * 添加string方法，写入字符串“Hello World!”，然后读取该字符串并返回该字符串

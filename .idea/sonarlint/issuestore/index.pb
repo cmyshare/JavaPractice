@@ -466,8 +466,6 @@ p
 @RedisDemo/src/main/java/com/open/redis/RedisWorkApplication.java,6\7\67bcbd160637c2751dae3ef19ad3bd65149ba19e
 A
 RedisDemo/pom.xml,5\6\564c784c7e6f389b10b52231cbc21d9af94eb4d5
-j
-:RedisDemo/src/main/java/com/open/redis/test/RedisTest.java,1\b\1b63c14ffae35465b3d2c153b6f1cf94694efe45
 |
 LJavaBaseToolDemo/src/main/java/com/open/javabasetool/objectdifftwo/README.md,4\f\4fa0affc1f2710ee2d7cfeb37b39d48dd16f3514
 †
