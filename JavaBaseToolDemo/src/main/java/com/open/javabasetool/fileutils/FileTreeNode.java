@@ -9,10 +9,10 @@ import java.util.Map;
  * @author cmy
  * @version 1.0
  * @date 2024/10/12 21:56
- * @description 动态树形文件夹
+ * @description 文件夹树节点
  */
 @Data
-public class DynamicTreeFileNode {
+public class FileTreeNode {
     /**
      * 父级文件夹名称
      */
@@ -28,5 +28,5 @@ public class DynamicTreeFileNode {
     /**
      * 子级文件夹
      */
-    private List<DynamicTreeFileNode> sonFileList;
+    private List<FileTreeNode> sonFileList;
 }

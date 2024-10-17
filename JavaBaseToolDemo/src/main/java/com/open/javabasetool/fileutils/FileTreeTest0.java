@@ -15,9 +15,9 @@ import java.util.zip.ZipOutputStream;
  * @author cmy
  * @version 1.0
  * @date 2024/10/12 1:23
- * @description
+ * @description 根据树形文件夹数据创建文件夹并保存文件的方法开始版
  */
-public class CreateManyFile {
+public class FileTreeTest0 {
     //共同点: 提供一个创建文件(父级文件file,新建文件名列表及其文件清单),返回一个文件夹
     //提供公共方法  创建父级文件夹,在一个文件夹中创建一个文件夹,移动文件夹,把文件加入指定文件夹中,删除整个文件夹,将整个文件夹打包zip
     public static File createAndPopulateFoldersWithURLs(String parentFolderName, List<String> spuNames, List<String> fileUrls) throws IOException {

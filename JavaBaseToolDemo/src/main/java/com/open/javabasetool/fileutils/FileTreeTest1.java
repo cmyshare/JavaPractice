@@ -1,6 +1,5 @@
 package com.open.javabasetool.fileutils;
 
-import cn.hutool.core.collection.CollUtil;
 import lombok.Data;
 
 import java.io.*;
@@ -16,11 +15,11 @@ import java.util.zip.ZipOutputStream;
  * @author cmy
  * @version 1.0
  * @date 2024/10/12 21:56
- * @description 动态树形文件节点测试
+ * @description 根据树形文件夹数据创建文件夹并保存文件的方法第1版
  */
 @Data
-public class DynamicTreeFileTest {
-    public static void createFoldersAndSaveFiles(DynamicTreeFileNode node, String basePath) throws Exception {
+public class FileTreeTest1 {
+    public static void createFoldersAndSaveFiles(FileTreeNode node, String basePath) throws Exception {
         String currentFolderName = node.getFileName();
         if (node.getParentFileName() == null) {
             currentFolderName = basePath + File.separator + currentFolderName;
@@ -58,7 +57,7 @@ public class DynamicTreeFileTest {
         }
 
         if (node.getSonFileList() != null && !node.getSonFileList().isEmpty()) {
-            for (DynamicTreeFileNode childNode : node.getSonFileList()) {
+            for (FileTreeNode childNode : node.getSonFileList()) {
                 createFoldersAndSaveFiles(childNode, basePath);
             }
         }
@@ -126,22 +125,22 @@ public class DynamicTreeFileTest {
 
     public static void main(String[] args) {
         // 创建一个示例的树形结构
-        DynamicTreeFileNode rootNode = new DynamicTreeFileNode();
+        FileTreeNode rootNode = new FileTreeNode();
         rootNode.setParentFileName(null);
         rootNode.setFileName("one工单");
         rootNode.setNameUrlMap(null);
         // 创建二级文件夹
-        List<DynamicTreeFileNode> twoNode = new LinkedList<>();
+        List<FileTreeNode> twoNode = new LinkedList<>();
         for (int i = 0; i < 3; i++) {
-            DynamicTreeFileNode dynamicTreeFileNode = new DynamicTreeFileNode();
-            dynamicTreeFileNode.setParentFileName("one工单");
-            dynamicTreeFileNode.setFileName("two商品SPU" + i);
+            FileTreeNode fileTreeNode = new FileTreeNode();
+            fileTreeNode.setParentFileName("one工单");
+            fileTreeNode.setFileName("two商品SPU" + i);
             Map<String, String> fileUrlsMap = new HashMap<>();
             fileUrlsMap.put("sku" + Math.random(), "https://static.cmyshare.cn/SpaceX/cmyshare.jpg");
             fileUrlsMap.put("sku" + Math.random(), "https://cdn.wwads.cn/creatives/oSReKgEOBzJ3wzX2Yt8DUALdcYwlx2ppSXkIpbTu.png");
-            dynamicTreeFileNode.setNameUrlMap(fileUrlsMap);
-            dynamicTreeFileNode.setSonFileList(null);
-            twoNode.add(dynamicTreeFileNode);
+            fileTreeNode.setNameUrlMap(fileUrlsMap);
+            fileTreeNode.setSonFileList(null);
+            twoNode.add(fileTreeNode);
         }
         rootNode.setSonFileList(twoNode);
 

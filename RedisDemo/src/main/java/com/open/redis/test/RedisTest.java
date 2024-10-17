@@ -12,10 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ScanParams;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -59,6 +56,11 @@ public class RedisTest {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;
 
+    public static void main(String[] args) {
+        List<Object> objects=null;
+        Object pmsSpuSameContentVo = objects.stream().filter(f -> null!=f.toString()).findFirst().orElse(null);
+    }
+
     /**
      * reids全模糊搜索skuNumberRedisson
      */
@@ -66,25 +68,20 @@ public class RedisTest {
     public Integer searchSkuBySkunumberRedisson(@RequestParam("skuNumber") String skuNumber) {
         //方法1
         long l = System.currentTimeMillis();
-        Set<String> keys = new HashSet<>();
+        List<Long> idList = new LinkedList<>();
         RKeys redisKeys = redissonClient.getKeys();
-        Iterable<String> keysByPattern = redisKeys.getKeysByPattern("skuList:" + "*" + skuNumber + "*");
+        Iterable<String> keysByPattern = redisKeys.getKeysByPattern("skuList:" + "*" + skuNumber + "*",100000);
         for (String s : keysByPattern) {
-            keys.add(s);
-            if (keys.size()>100){
+            String s1 = s.split(":")[1];
+            idList.add(Long.valueOf(s1));
+            if (idList.size()>100){
                 break;
             }
         }
         long l2 = System.currentTimeMillis() - l;
         System.out.println("reids全模糊搜索skuNumber耗时:" + l2);
 
-        List<String> idList = keys.stream()
-                .map(key -> key.split(":")[1])
-                .collect(Collectors.toList());
-        long l3 = System.currentTimeMillis() - l;
-        System.out.println("reids全模糊搜索skuNumber，取出id耗时:" + l3);
-
-        return keys.size();
+        return idList.size();
     }
 
 

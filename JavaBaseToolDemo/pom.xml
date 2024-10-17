@@ -58,6 +58,16 @@
             <artifactId>hutool-all</artifactId>
             <version>5.8.18</version> <!-- 请使用最新版本 -->
         </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/net.sf.sevenzipjbinding/sevenzipjbinding
+         7-Zip-jbinding是一个免费的跨平台java绑定7-Zip免费压缩/解压缩库-->
+        <dependency>
+            <groupId>net.sf.sevenzipjbinding</groupId>
+            <artifactId>sevenzipjbinding</artifactId>
+            <version>16.02-2.01</version>
+        </dependency>
+
     </dependencies>
 
 </project>
