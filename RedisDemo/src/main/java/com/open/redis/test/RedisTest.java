@@ -1,5 +1,8 @@
 package com.open.redis.test;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import org.redisson.api.RKeys;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.ScanParams;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 /**
  * @author cmy
@@ -376,5 +384,37 @@ public class RedisTest {
 
         //TODO 购物车 以用户id为 key，商品id为field，商品数量为value，恰好构成了购物车的3个要素
         return s;
+    }
+
+    /**
+     * 字符串中包含数字个数
+     * @param str
+     * @return
+     */
+    public static Integer stringNumberLength(String str){
+        int count = 0;
+        for (int i = 0; i < str.length(); i++) {
+            if (Character.isDigit(str.charAt(i))) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /**
+     * 将originalMap集合拆成numPartitions份
+     * @param originalMap
+     * @param numPartitions
+     * @param <K>
+     * @param <V>
+     * @return
+     */
+    public static <K, V> List<Map<K, V>> partitionMap(Map<K, V> originalMap, int numPartitions) {
+        return IntStream.range(0, numPartitions)
+                .mapToObj(i -> originalMap.entrySet().stream()
+                        .skip((long) i * originalMap.size() / numPartitions)
+                        .limit((originalMap.size() + (i == numPartitions - 1? 0 : numPartitions - 1)) / numPartitions)
+                        .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue)))
+                .collect(Collectors.toList());
     }
 }

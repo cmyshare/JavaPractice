@@ -29,7 +29,7 @@ public class MyRedissonConfig {
         //1、创建配置
         Config config = new Config();
         //这里单节点，但可集群配置
-        config.useSingleServer().setAddress("redis://localhost:6379");
+        config.useSingleServer().setAddress("redis://127.0.0.1:6379").setPassword("123456");
 
         //2、根据Config创建出RedissonClient实例
         //Redis url should start with redis:// or rediss://
