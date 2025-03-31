@@ -133,6 +133,7 @@ public class CustomFileUtils {
                 throw new RuntimeException("将文件夹压缩成zip文件异常！", e);
             }
         });
+        zipOut.close();
 
         return zipFile;
     }
