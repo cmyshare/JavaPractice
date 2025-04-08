@@ -171,5 +171,89 @@ public class MysqlTest {
             e1.printStackTrace();
         }
     }
+
+
+    /**
+     * 2.3 采用 JDBC 批处理（开启事务、无事务）修改为更新操作
+     */
+    @Test
+    public void updateBigData3() {
+        // 定义连接、statement 对象
+        Connection conn = null;
+        // PreparedStatement 预处理 sql 语句必须放在循环体外
+        PreparedStatement pstm = null;
+        try {
+            // 加载 jdbc 驱动
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            // 连接 mysql
+            conn = DriverManager.getConnection(url, user, password);
+            // 编写 sql，修改为更新语句，这里假设根据 id 更新 person 表的某些字段
+            String sql = "UPDATE person SET name =?, sex =?, age =?, email =?, tel =?, address =? WHERE id =?";
+            // 预编译 sql
+            pstm = conn.prepareStatement(sql);
+            // 开始总计时
+            long bTime1 = System.currentTimeMillis();
+
+            // 业务处理 循环 10 次，每次更新一万数据，一共 10 万
+            for (int i = 0; i < 10; i++) {
+                // 将自动提交关闭-开启事务 false开启事务 true关闭事务
+                conn.setAutoCommit(false);
+                // 开启分段计时，计 1W 数据耗时
+                long bTime = System.currentTimeMillis();
+                // 开始循环
+                while (begin < end) {
+                    // 赋值
+                    pstm.setString(1, RandomValue.getChineseName());
+                    pstm.setString(2, RandomValue.name_sex);
+                    pstm.setInt(3, RandomValue.getNum(1, 100));
+                    pstm.setString(4, RandomValue.getEmail(4, 15));
+                    pstm.setString(5, RandomValue.getTel());
+                    pstm.setString(6, RandomValue.getRoad());
+                    // 假设根据 id 进行更新，这里需要根据你的业务需求修改
+                    pstm.setLong(7, begin);
+                    // 添加到同一个批处理中
+                    pstm.addBatch();
+                    begin++;
+                }
+                // 执行批处理
+                pstm.executeBatch();
+                // 提交事务-开启事务
+                conn.commit();
+                // 边界值自增 10W
+                end += 100000;
+                // 关闭分段计时
+                long eTime = System.currentTimeMillis();
+                // 输出
+                System.out.println("成功更新 10W 条数据耗时》》》》》》》》》》》：" + (eTime - bTime));
+            }
+            // 关闭总计时
+            long eTime1 = System.currentTimeMillis();
+            // 输出
+            System.out.println("更新 100W 数据共耗时》》》》》》》》》》》》》》：" + (eTime1 - bTime1));
+        } catch (SQLException e) {
+            try {
+                if (conn!= null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+            e.printStackTrace();
+        } catch (ClassNotFoundException e1) {
+            e1.printStackTrace();
+        } finally {
+            try {
+                if (pstm!= null) {
+                    pstm.close();
+                }
+                if (conn!= null) {
+                    conn.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }
 

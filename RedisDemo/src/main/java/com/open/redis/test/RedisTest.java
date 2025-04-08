@@ -373,17 +373,24 @@ public class RedisTest {
     public String hashTest() {
         //TODO 基础操作
         //Redis 映射在哈希上工作的特定操作
-        HashOperations<String, String, String> hashOperations = redisTemplate.opsForHash();
+        HashOperations<String, String, Object> hashOperations = redisTemplate.opsForHash();
         //put(H key, HK hashKey, HV value) 设置value哈希的hashKey。
         hashOperations.put("key", "hashKey", "Hello");
         //hashKey从处的散列中获取given的值key
-        String s = hashOperations.get("key", "hashKey");
+        Object s = hashOperations.get("key", "hashKey");
         System.out.println("hashKey从处的散列中获取given的值key" + s);
 
         //TODO 缓存对象 Hash类型的（key，field， value）的结构与对象的（对象id， 属性， 值）的结构相似
 
         //TODO 购物车 以用户id为 key，商品id为field，商品数量为value，恰好构成了购物车的3个要素
-        return s;
+
+        Map<String, Object> queryTheCostPriceOfNewAndOld0 = hashOperations.entries("queryTheCostPriceOfNewAndOld0");
+        System.out.println("==============="+queryTheCostPriceOfNewAndOld0.size());
+        queryTheCostPriceOfNewAndOld0.forEach((k,v)->{
+            System.out.println(k+"============="+v.toString());
+        });
+
+        return s.toString();
     }
 
     /**
