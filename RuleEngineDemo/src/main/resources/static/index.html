@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alibaba QLExpress Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        textarea {
+            height: 100px;
+            resize: vertical;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 4px;
+            min-height: 50px;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+        .examples {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        .example {
+            margin-bottom: 15px;
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            border: 1px solid #e9ecef;
+        }
+        .example:hover {
+            background-color: #e9ecef;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🚀 Alibaba QLExpress 表达式引擎演示</h1>
+
+    <div class="form-group">
+        <label for="expression">表达式:</label>
+        <textarea id="expression" placeholder="请输入表达式，例如: a + b * c"></textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="context">上下文参数 (JSON格式，可选):</label>
+        <textarea id="context" placeholder='例如: {"a": 10, "b": 5, "c": 2}'></textarea>
+    </div>
+
+    <button onclick="executeExpression()">执行表达式</button>
+    <button onclick="validateExpression()">验证语法</button>
+    <button onclick="loadExamples()">加载示例</button>
+
+    <div id="result" class="result" style="display: none;"></div>
+
+    <div class="examples">
+        <h3>📖 示例表达式（点击使用）:</h3>
+        <div class="example" onclick="useExample('1 + 2 * 3', '')">
+            <strong>简单数学计算:</strong> 1 + 2 * 3
+        </div>
+        <div class="example" onclick="useExample('a + b * c', '{\"a\": 10, \"b\": 5, \"c\": 2}')">
+        <strong>使用变量计算:</strong> a + b * c
+    </div>
+    <div class="example" onclick="useExample('if(score >= 60) then \"及格\" else \"不及格\"', '{\"score\": 85}')">
+    <strong>条件判断:</strong> if(score >= 60) then "及格" else "不及格"
+</div>
+<div class="example" onclick="useExample('name + \"的年龄是\" + age + \"岁\"', '{\"name\": \"张三\", \"age\": 25}')">
+<strong>字符串操作:</strong> name + "的年龄是" + age + "岁"
+</div>
+</div>
+</div>
+
+<script>
+    function executeExpression() {
+        const expression = document.getElementById('expression').value;
+        const contextStr = document.getElementById('context').value;
+
+        if (!expression.trim()) {
+            showResult('请输入表达式', 'error');
+            return;
+        }
+
+        let context = null;
+        if (contextStr.trim()) {
+            try {
+                context = JSON.parse(contextStr);
+            } catch (e) {
+                showResult('上下文参数JSON格式错误: ' + e.message, 'error');
+                return;
+            }
+        }
+
+        const requestData = {
+            expression: expression,
+            context: context
+        };
+
+        fetch('/api/qlexpress/execute', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(requestData)
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    showResult(`✅ 执行成功！
+                    表达式: ${data.expression}
+                    结果: ${data.result.result} (${data.resultType})`, 'success');
+                } else {
+                    showResult(`❌ 执行失败: ${data.error}`, 'error');
+                }
+            })
+            .catch(error => {
+                showResult(`❌ 请求失败: ${error.message}`, 'error');
+            });
+    }
+
+    function validateExpression() {
+        const expression = document.getElementById('expression').value;
+
+        if (!expression.trim()) {
+            showResult('请输入表达式', 'error');
+            return;
+        }
+
+        fetch('/api/qlexpress/validate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({expression: expression})
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.valid) {
+                    showResult(`✅ 表达式语法正确`, 'success');
+                } else {
+                    showResult(`❌ 表达式语法错误: ${data.message || '未知错误'}`, 'error');
+                }
+            })
+            .catch(error => {
+                showResult(`❌ 验证失败: ${error.message}`, 'error');
+            });
+    }
+
+    function loadExamples() {
+        fetch('/api/qlexpress/examples')
+            .then(response => response.json())
+            .then(data => {
+                let result = '📚 更多示例:\n\n';
+                data.examples.forEach((example, index) => {
+                    result += `${index + 1}. ${example.description}\n`;
+                    result += `   表达式: ${example.expression}\n`;
+                    if (example.context) {
+                        result += `   上下文: ${JSON.stringify(example.context)}\n`;
+                    }
+                    result += `   预期结果: ${example.expectedResult}\n\n`;
+                });
+                showResult(result, 'success');
+            })
+            .catch(error => {
+                showResult(`❌ 加载示例失败: ${error.message}`, 'error');
+            });
+    }
+
+    function useExample(expression, context) {
+        document.getElementById('expression').value = expression;
+        document.getElementById('context').value = context;
+    }
+
+    function showResult(message, type) {
+        const resultDiv = document.getElementById('result');
+        resultDiv.className = `result ${type}`;
+        resultDiv.innerHTML = message.replace(/\n/g, '<br>');
+        resultDiv.style.display = 'block';
+    }
+</script>
+</body>
+</html>

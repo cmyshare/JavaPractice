@@ -79,7 +79,7 @@ public class GlueFactory {
 	}
 
 	/**
-	 * inject service of bean field
+	 * inject com.open.rule.service of bean field
 	 *
 	 * @param instance
 	 */

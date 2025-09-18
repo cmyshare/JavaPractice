@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 import java.util.Arrays;
 
 /**
- * xxl-job config
+ * xxl-job com.open.rule.config
  *
  * @author xuxueli 2017-04-28
  */
@@ -67,7 +67,7 @@ public class XxlJobAdminConfig implements InitializingBean, DisposableBean {
     @Value("${xxl.job.logretentiondays}")
     private int logretentiondays;
 
-    // dao, service
+    // dao, com.open.rule.service
 
     @Resource
     private XxlJobLogDao xxlJobLogDao;

@@ -27,11 +27,11 @@ public class ExecutorRegistryThread {
 
         // valid
         if (appname==null || appname.trim().length()==0) {
-            logger.warn(">>>>>>>>>>> xxl-job, executor registry config fail, appname is null.");
+            logger.warn(">>>>>>>>>>> xxl-job, executor registry com.open.rule.config fail, appname is null.");
             return;
         }
         if (XxlJobExecutor.getAdminBizList() == null) {
-            logger.warn(">>>>>>>>>>> xxl-job, executor registry config fail, adminAddresses is null.");
+            logger.warn(">>>>>>>>>>> xxl-job, executor registry com.open.rule.config fail, adminAddresses is null.");
             return;
         }
 

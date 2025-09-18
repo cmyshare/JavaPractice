@@ -102,7 +102,7 @@ public class EmbedServer {
                 }
             }
         });
-        thread.setDaemon(true);    // daemon, service jvm, user thread leave >>> daemon leave >>> jvm leave
+        thread.setDaemon(true);    // daemon, com.open.rule.service jvm, user thread leave >>> daemon leave >>> jvm leave
         thread.start();
     }
 

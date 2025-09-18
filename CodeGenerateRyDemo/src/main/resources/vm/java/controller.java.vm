@@ -1,4 +1,4 @@
-package ${packageName}.controller;
+package ${packageName}.com.open.rule.controller;
 
 import java.util.List;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.ruoyi.common.annotation.Log;
-import com.ruoyi.common.core.controller.BaseController;
+import com.ruoyi.common.core.com.open.rule.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.enums.BusinessType;
 import ${packageName}.domain.${ClassName};
-import ${packageName}.service.I${ClassName}Service;
+import ${packageName}.com.open.rule.service.I${ClassName}Service;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 #if($table.crud || $table.sub)
 import com.ruoyi.common.core.page.TableDataInfo;

@@ -28,6 +28,10 @@
         <module>JavaBaseToolDemo</module>
         <module>ImageDemo</module>
         <module>OfficeDemo</module>
+        <module>RuleEngineDemo</module>
+        <module>CreateDemo</module>
+        <module>CreateDemTwo</module>
+        <module>CreateDemoThree</module>
     </modules>
 
     <properties>

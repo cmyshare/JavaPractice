@@ -886,14 +886,14 @@ docker run -e PARAMS="--spring.datasource.url=jdbc:mysql://127.0.0.1:3306/xxl_jo
 
 执行器组件，配置文件地址：
 
-    /xxl-job/xxl-job-executor-samples/xxl-job-executor-sample-springboot/src/main/java/com/xxl/job/executor/core/config/XxlJobConfig.java
+    /xxl-job/xxl-job-executor-samples/xxl-job-executor-sample-springboot/src/main/java/com/xxl/job/executor/core/com.open.rule.config/XxlJobConfig.java
 
 执行器组件，配置内容说明：
 
 ```
 @Bean
 public XxlJobSpringExecutor xxlJobExecutor() {
-    logger.info(">>>>>>>>>>> xxl-job config init.");
+    logger.info(">>>>>>>>>>> xxl-job com.open.rule.config init.");
     XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();
     xxlJobSpringExecutor.setAdminAddresses(adminAddresses);
     xxlJobSpringExecutor.setAppname(appname);
@@ -1058,7 +1058,7 @@ Bean模式任务，支持基于方法的开发方式，每个任务对应一个�
     4、任务结果：默认任务结果为 "成功" 状态，不需要主动设置；如有诉求，比如设置任务结果为失败，可以通过 "XxlJobHelper.handleFail/handleSuccess" 自主设置任务结果；
     
 ```
-// 可参考Sample示例执行器中的 "com.xxl.job.executor.service.jobhandler.SampleXxlJob" ，如下：
+// 可参考Sample示例执行器中的 "com.xxl.job.executor.com.open.rule.service.jobhandler.SampleXxlJob" ，如下：
 @XxlJob("demoJobHandler")
 public void demoJobHandler() throws Exception {
     XxlJobHelper.log("XXL-JOB, Hello World.");
@@ -1342,7 +1342,7 @@ XXL-JOB的单个任务，针对多个执行器是并行运行的，针对单个�
 
 调度中心提供的"日志回调服务API服务"代码位置如下：
 ```
-xxl-job-admin#com.xxl.job.admin.controller.JobApiController.callback
+xxl-job-admin#com.xxl.job.admin.com.open.rule.controller.JobApiController.callback
 ```
 
 “执行器”在接收到任务执行请求后，执行任务，在执行结束之后会将执行结果回调通知“调度中心”：
@@ -1591,7 +1591,7 @@ XXL-JOB 目标是一种跨平台、跨语言的任务调度规范和协议。
 
 ### 6.1 调度中心 RESTful API
 
-API服务位置：com.xxl.job.core.biz.AdminBiz （ com.xxl.job.admin.controller.JobApiController ）
+API服务位置：com.xxl.job.core.biz.AdminBiz （ com.xxl.job.admin.com.open.rule.controller.JobApiController ）
 API服务请求参考代码：com.xxl.job.adminbiz.AdminBizTest
 
 #### a、任务回调

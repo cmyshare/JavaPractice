@@ -13,22 +13,25 @@
         <module name="RabbitMQDemo" />
         <module name="ToolDemo" />
         <module name="OfficeDemo" />
+        <module name="CreateDemoThree" />
+        <module name="ImageDemo" />
         <module name="RedisDemo" />
         <module name="RocketMQDemo" />
-        <module name="ImageDemo" />
-        <module name="CodeGenerateRyDemo" />
         <module name="xxl-job-frame" />
+        <module name="CodeGenerateRyDemo" />
         <module name="LeetCodeDemo" />
         <module name="CodeGenerateDemo" />
         <module name="MysqlDemo" />
         <module name="MongodbDemo" />
+        <module name="RuleEngineDemo" />
         <module name="ActivitiDemo" />
+        <module name="CreateDemTwo" />
         <module name="NettyDemo" />
         <module name="ScheduledTaskDemo" />
         <module name="WebSocketDemo" />
         <module name="JavaBaseToolDemo" />
-        <module name="EasyExcelDemo" />
         <module name="xxl-job-admin" />
+        <module name="EasyExcelDemo" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

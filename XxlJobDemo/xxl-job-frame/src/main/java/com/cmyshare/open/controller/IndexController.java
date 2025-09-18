@@ -1,4 +1,4 @@
-package com.cmyshare.open.controller;//package com.xxl.job.executor.mvc.controller;
+package com.cmyshare.open.controller;//package com.xxl.job.executor.mvc.com.open.rule.controller;
 //
 //import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 //import org.springframework.stereotype.Controller;

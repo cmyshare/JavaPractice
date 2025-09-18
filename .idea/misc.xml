@@ -4,6 +4,10 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
+        <option value="$PROJECT_DIR$/XxlJobDemo/xxl-job-admin/pom.xml" />
+        <option value="$PROJECT_DIR$/XxlJobDemo/xxl-job-core/pom.xml" />
+        <option value="$PROJECT_DIR$/XxlJobDemo/xxl-job-native/pom.xml" />
+        <option value="$PROJECT_DIR$/XxlJobDemo/xxl-job-frame/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>

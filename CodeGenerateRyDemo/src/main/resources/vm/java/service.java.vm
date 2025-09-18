@@ -1,4 +1,4 @@
-package ${packageName}.service;
+package ${packageName}.com.open.rule.service;
 
 import java.util.List;
 import ${packageName}.domain.${ClassName};

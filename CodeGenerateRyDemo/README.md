@@ -34,13 +34,13 @@ gen.tablePrefix=sys_
 │ │ └── com
 │ │     └── kdyzm
 │ │         └── business
-│ │             ├── controller
+│ │             ├── com.open.rule.controller
 │ │             │ └── GoodsController.java
 │ │             ├── domain
 │ │             │ └── Goods.java
 │ │             ├── mapper
 │ │             │ └── GoodsMapper.java
-│ │             └── service
+│ │             └── com.open.rule.service
 │ │                 ├── IGoodsService.java
 │ │                 └── impl
 │ │                     └── GoodsServiceImpl.java

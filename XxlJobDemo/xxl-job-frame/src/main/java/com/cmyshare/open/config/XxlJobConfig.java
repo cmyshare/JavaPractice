@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * xxl-job config
+ * xxl-job com.open.rule.config
  *
  * @author xuxueli 2017-04-28
  */
@@ -43,7 +43,7 @@ public class XxlJobConfig {
 
     @Bean
     public XxlJobSpringExecutor xxlJobExecutor() {
-        logger.info(">>>>>>>>>>> xxl-job config init.");
+        logger.info(">>>>>>>>>>> xxl-job com.open.rule.config init.");
         XxlJobSpringExecutor xxlJobSpringExecutor = new XxlJobSpringExecutor();
         xxlJobSpringExecutor.setAdminAddresses(adminAddresses);
         xxlJobSpringExecutor.setAppname(appname);
