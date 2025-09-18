@@ -30,10 +30,10 @@ public class ImagePathReplaceUtil {
     private static Logger log = LoggerFactory.getLogger(ImagePathReplaceUtil.class);
 
     //源目录
-    private static String COPY_ORIGN = "F:\\Typora123\\Typora保存";
+    private static String COPY_ORIGN = "D:\\Developer\\TyporaSave";
 
     //目标目录
-    private static String COPY_TO = "F:\\Typora123\\Typora保存";
+    private static String COPY_TO = "D:\\Developer\\TyporaSave";
 
 
     //语雀图片后缀1，被替换内容 正则表达式以&clientId开头,以)结束 #clientId.*[/)]

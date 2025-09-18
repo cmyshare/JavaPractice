@@ -70,6 +70,37 @@ public class RedisTest {
     }
 
     /**
+     * 实现基于 Redis 有序集合（Sorted Set）的分布式限流器
+     * @param key Redis 中存储请求记录的键名
+     * @param limit 一分钟内允许的最大请求次数
+     * @param period 时间周期，单位为秒
+     * @return 如果可以发起请求返回 true，否则返回 false
+     */
+    @GetMapping("/canMakeRequest")
+    public Object canMakeRequest(String key, int limit, int period)  {
+        /**
+         * canMakeRequest 方法：
+         * 获取当前时间戳：long currentTime = System.currentTimeMillis() / 1000; 获取当前时间的秒数。
+         * 移除过期记录：redisTemplate.opsForZSet().removeRangeByScore(key, 0, currentTime - period); 移除有序集合中分数在 0 到 currentTime - period 之间的元素，即移除过期的请求记录。
+         * 获取请求计数：Long count = redisTemplate.opsForZSet().zCard(key); 获取有序集合中的元素数量，即当前时间周期内的请求次数。
+         * 判断是否可以请求：如果 count 小于 limit，则将当前时间戳作为成员添加到有序集合中，分数也为当前时间戳，然后返回 true 表示可以发起请求；否则返回 false。
+         */
+        long currentTime = System.currentTimeMillis() / 1000;
+        // 移除 Redis 有序集合中过期的请求记录
+        redisTemplate.opsForZSet().removeRangeByScore(key, 0, currentTime - period);
+        // 获取当前时间周期内的请求计数
+        Long count = redisTemplate.opsForZSet().zCard(key);
+        // 检查当前请求计数是否小于最大限制
+        if (count != null && count < limit) {
+            // 如果小于限制，将当前时间戳添加到 Redis 有序集合中
+            redisTemplate.opsForZSet().add(key, String.valueOf(currentTime), currentTime);
+            return true;
+        }
+        return false;
+    }
+
+
+    /**
      * reids全模糊搜索skuNumberRedisson
      */
     @GetMapping("/searchSkuBySkunumberRedisson")
