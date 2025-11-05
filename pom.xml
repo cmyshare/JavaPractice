@@ -29,9 +29,7 @@
         <module>ImageDemo</module>
         <module>OfficeDemo</module>
         <module>RuleEngineDemo</module>
-        <module>CreateDemo</module>
-        <module>CreateDemTwo</module>
-        <module>CreateDemoThree</module>
+        <module>ApachePoiDemp</module>
     </modules>
 
     <properties>
