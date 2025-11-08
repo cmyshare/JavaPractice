@@ -22,7 +22,6 @@
         <module>CodeGenerateRyDemo</module>
         <module>MysqlDemo</module>
         <module>MongodbDemo</module>
-        <module>RocketMQDemo</module>
         <module>ScheduledTaskDemo</module>
         <module>XxlJobDemo</module>
         <module>JavaBaseToolDemo</module>
@@ -30,6 +29,7 @@
         <module>OfficeDemo</module>
         <module>RuleEngineDemo</module>
         <module>ApachePoiDemp</module>
+        <module>RocketMQDemo</module>
     </modules>
 
     <properties>

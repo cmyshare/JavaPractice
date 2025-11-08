@@ -1,0 +1,8 @@
+server:
+  port: 8082
+
+rocketmq:
+  name-server: 127.0.0.1:9876  # Docker 或本地地址
+  producer:
+    group: order-producer-group
+  # consumer 自动注册，无需额外配置
