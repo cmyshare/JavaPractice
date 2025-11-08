@@ -24,7 +24,6 @@
         <module>MongodbDemo</module>
         <module>ScheduledTaskDemo</module>
         <module>XxlJobDemo</module>
-        <module>JavaBaseToolDemo</module>
         <module>ImageDemo</module>
         <module>OfficeDemo</module>
         <module>RuleEngineDemo</module>

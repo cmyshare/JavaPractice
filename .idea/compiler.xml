@@ -28,7 +28,6 @@
         <module name="NettyDemo" />
         <module name="ScheduledTaskDemo" />
         <module name="WebSocketDemo" />
-        <module name="JavaBaseToolDemo" />
         <module name="xxl-job-admin" />
         <module name="EasyExcelDemo" />
       </profile>
@@ -39,6 +38,7 @@
       <module name="CreateDemo" target="1.8" />
       <module name="CreateDemoThree" target="1.8" />
       <module name="CreateDemTwo" target="1.8" />
+      <module name="JavaBaseToolDemo" target="1.8" />
       <module name="untitled" target="1.8" />
       <module name="xxl-job-executor-sample-frameless" target="1.8" />
       <module name="xxl-job-executor-sample-springboot" target="1.8" />
