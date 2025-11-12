@@ -14,12 +14,10 @@
         <module>RedisDemo</module>
         <module>ActivitiDemo</module>
         <module>EasyExcelDemo</module>
-        <module>CodeGenerateDemo</module>
         <module>LeetCodeDemo</module>
         <module>NettyDemo</module>
         <module>RabbitMQDemo</module>
         <module>ToolDemo</module>
-        <module>CodeGenerateRyDemo</module>
         <module>MysqlDemo</module>
         <module>MongodbDemo</module>
         <module>ScheduledTaskDemo</module>

@@ -17,9 +17,7 @@
         <module name="RedisDemo" />
         <module name="RocketMQDemo" />
         <module name="xxl-job-frame" />
-        <module name="CodeGenerateRyDemo" />
         <module name="LeetCodeDemo" />
-        <module name="CodeGenerateDemo" />
         <module name="MysqlDemo" />
         <module name="ApachePoiDemp" />
         <module name="MongodbDemo" />
@@ -35,6 +33,8 @@
     <bytecodeTargetLevel>
       <module name="ApachePoiDemo" target="1.8" />
       <module name="ApachePOIDemo" target="1.8" />
+      <module name="CodeGenerateDemo" target="1.8" />
+      <module name="CodeGenerateRyDemo" target="1.8" />
       <module name="CreateDemo" target="1.8" />
       <module name="CreateDemoThree" target="1.8" />
       <module name="CreateDemTwo" target="1.8" />
