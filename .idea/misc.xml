@@ -4,11 +4,19 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
+        <option value="$PROJECT_DIR$/XxlJobDemo/xxl-job-admin/pom.xml" />
+        <option value="$PROJECT_DIR$/XxlJobDemo/xxl-job-core/pom.xml" />
+        <option value="$PROJECT_DIR$/XxlJobDemo/xxl-job-native/pom.xml" />
+        <option value="$PROJECT_DIR$/XxlJobDemo/xxl-job-frame/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
       <set>
+        <option value="$PROJECT_DIR$/ApachePOIDemo/pom.xml" />
+        <option value="$PROJECT_DIR$/CodeGenerateDemo/pom.xml" />
+        <option value="$PROJECT_DIR$/CodeGenerateRyDemo/pom.xml" />
+        <option value="$PROJECT_DIR$/JavaBaseToolDemo/pom.xml" />
         <option value="$PROJECT_DIR$/XxlJobDemo/untitled/pom.xml" />
         <option value="$PROJECT_DIR$/XxlJobDemo/xxl-job-executor-samples/pom.xml" />
         <option value="$PROJECT_DIR$/XxlJobDemo/xxl-job-test/pom.xml" />

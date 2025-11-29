@@ -1,0 +1,33 @@
+# Spring Boot应用配置
+spring:
+  application:
+    name: RuleEngineDemo
+
+  # Web服务配置
+  web:
+    resources:
+      static-locations: classpath:/static/
+
+# 服务器配置
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    encoding:
+      charset: UTF-8
+      enabled: true
+
+# 日志配置
+logging:
+  level:
+    com.example.qlexpress: DEBUG
+    com.ql.util.express: INFO
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# 应用信息
+info:
+  app:
+    name: Alibaba QLExpress Demo
+    description: Spring Boot集成阿里巴巴QLExpress表达式引擎示例
+    version: 1.0.0

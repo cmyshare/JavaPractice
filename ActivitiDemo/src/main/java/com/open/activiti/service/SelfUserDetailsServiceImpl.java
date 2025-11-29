@@ -1,4 +1,4 @@
-//package com.open.activiti.service;
+//package com.open.activiti.com.open.rule.service;
 //
 //import org.springframework.security.core.userdetails.User;
 //import org.springframework.security.core.userdetails.UserDetails;

@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 /**
- * job group controller
+ * job group com.open.rule.controller
  * @author xuxueli 2016-10-02 20:52:56
  */
 @Controller

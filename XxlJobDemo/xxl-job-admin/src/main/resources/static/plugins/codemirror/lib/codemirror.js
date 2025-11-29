@@ -1320,8 +1320,8 @@
     mimeModes[mime] = spec;
   }
 
-  // Given a MIME type, a {name, ...options} config object, or a name
-  // string, return a mode config object.
+  // Given a MIME type, a {name, ...options} com.open.rule.config object, or a name
+  // string, return a mode com.open.rule.config object.
   function resolveMode(spec) {
     if (typeof spec == "string" && mimeModes.hasOwnProperty(spec)) {
       spec = mimeModes[spec];

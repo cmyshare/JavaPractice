@@ -44,7 +44,7 @@ XXL-JOB is a distributed task scheduling framework, the core design goal is to d
 - 22.Failure handling strategy:Handling strategy when scheduling fails, the strategy includes: failure alarm (default), failure retry;
 - 23.Sharding broadcast task: When an executor cluster is deployed, task routing strategy select "sharding broadcast", a task schedule will broadcast all the actuators in the cluster to perform it once, you can develop sharding tasks based on sharding parameters;
 - 24.Dynamic sharding: The sharding broadcast task is sharded by the executors to support the dynamic expansion of the executor cluster to dynamically increase the number of shardings and cooperate with the business handle; In the large amount of data operations can significantly improve the task processing capacity and speed.
-- 25、Event trigger：In addition to "Cron" and "Task Dependency" to trigger tasks, support event-based triggering tasks. The dispatch center provides API service that triggers a single execution of the task, it can be triggered flexibly according to business events. 
+- 25、Event trigger：In addition to "Cron" and "Task Dependency" to trigger tasks, support event-based triggering tasks. The dispatch center provides API com.open.rule.service that triggers a single execution of the task, it can be triggered flexibly according to business events. 
 
 
 ###  1.3 Development
@@ -494,7 +494,7 @@ Concrete contet describe as follows：
 
 ```
 <!-- configure 01、JobHandler scan path：auto scan JobHandler bean managed by container -->
-<context:component-scan base-package="com.xxl.job.executor.service.jobhandler" />
+<context:component-scan base-package="com.xxl.job.executor.com.open.rule.service.jobhandler" />
 
 <!-- configure 02、Excutor：executer core configure -->
 <bean id="xxlJobExecutor" class="com.xxl.job.core.executor.XxlJobExecutor" init-method="start" destroy-method="destroy" >
@@ -805,7 +805,7 @@ XXL-JOB solve above problems of quartz.
 #### 5.4.2 RemoteHttpJobBean
 Under Quartz develop,task logic often was maintained by QuartzJobBean, couple is very serious.in XXL-JOB"Schedule module" and "task module" are completely decoupled,all scheduled tasks in schedule module use the same QuartzJobBean called RemoteHttpJobBean.the params of the tasks was maintained in the extended tables,when trigger RemoteHttpJobBean,it will parse different params and start remote cal l and it wil call relative remote executor.
 
-This call module is like RPC,RemoteHttpJobBean provide call proxy functionality,the executor is provided as remote service.
+This call module is like RPC,RemoteHttpJobBean provide call proxy functionality,the executor is provided as remote com.open.rule.service.
 
 #### 5.4.3 Schedule Center HA（Cluster）
 It is based on Quartz cluster，databse use Mysql；while QUARTZ task schedule is used in Clustered Distributed Concurrent Environment,all nodes will report task info and store into database.it will fetch trigger from database while execute task,if trigger name and execute time is the same only one node will execute the task.
@@ -840,7 +840,7 @@ Every schedule module was scheduled and executed parallel in XXL-JOB,but tasks i
 
 #### 5.4.6 misfire
 The handle policy when miss the job’s trigger time.
-he reason may be:restart service,schedule thread was blocked by QuartzJobBean, threads was exhausted,some task enable @DisallowConcurrentExecution，the last schedule  was blocked and next schedule was missed.
+he reason may be:restart com.open.rule.service,schedule thread was blocked by QuartzJobBean, threads was exhausted,some task enable @DisallowConcurrentExecution，the last schedule  was blocked and next schedule was missed.
 
 The default value of misfire in quartz.properties as shown below, unit in milliseconds:
 ```
@@ -859,12 +859,12 @@ CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(jobIn
 CronTrigger cronTrigger = TriggerBuilder.newTrigger().withIdentity(triggerKey).withSchedule(cronScheduleBuilder).build();
 ```
 
-#### 5.4.7 log callback service
-When schedule center of the schedule module was deployed as web service, on one side it play as schedule center, on the other side it also provide api service for executor. 
+#### 5.4.7 log callback com.open.rule.service
+When schedule center of the schedule module was deployed as web com.open.rule.service, on one side it play as schedule center, on the other side it also provide api com.open.rule.service for executor. 
 
-The source code location of schedule center’s “log callback api service” as shown below:
+The source code location of schedule center’s “log callback api com.open.rule.service” as shown below:
 ```
-xxl-job-admin#com.xxl.job.admin.controller.JobApiController.callback
+xxl-job-admin#com.xxl.job.admin.com.open.rule.controller.JobApiController.callback
 ```
 
 Executor will execute task when it receive task execute request.it will notify the task execute result to schedule center when the task is done. 
@@ -916,7 +916,7 @@ principle: every Bean mode task is a Spring Bean instance and it is maintained i
 
 #### 5.5.2 "GLUE模式(Java)" task
 Development steps:go and see "chapter 3" .
-Principle : every "GLUE模式(Java)" task code is a class implemets interface IJobHandler, when executor received schedule request from schedule center these code will be loaded by Groovy classloader and instantiate into a Java object and inject spring bean service declared in this code at the same time（please confirm service and class reference in Glue code exist in executor project）, then call the object’s execute() method and execute task logic.
+Principle : every "GLUE模式(Java)" task code is a class implemets interface IJobHandler, when executor received schedule request from schedule center these code will be loaded by Groovy classloader and instantiate into a Java object and inject spring bean com.open.rule.service declared in this code at the same time（please confirm com.open.rule.service and class reference in Glue code exist in executor project）, then call the object’s execute() method and execute task logic.
 
 #### 5.5.3 GLUE模式(Shell) + GLUE模式(Python)
 Development steps:go and see "chapter 3" .
@@ -933,7 +933,7 @@ Executor is actually an embedded Jetty server with default port 9999, as shown b
 
 Executor will identify Bean mode task in spring container through @JobHandler When project start, it will be managed use the value of annotation as key. 
 
-When executor received schedule request from schedule center, if task type is “Bean模式” it will match bean mode task in Spring container and call it’s execute() method and execute task logic. if task type is “GLUE模式”, it will load Glue code, instantiate a Java object and inject other spring service（notice: the spring service injected in Glue code must exist in the same executor project）, then call execute() method and execute task logic. 
+When executor received schedule request from schedule center, if task type is “Bean模式” it will match bean mode task in Spring container and call it’s execute() method and execute task logic. if task type is “GLUE模式”, it will load Glue code, instantiate a Java object and inject other spring com.open.rule.service（notice: the spring com.open.rule.service injected in Glue code must exist in the same executor project）, then call execute() method and execute task logic. 
 
 #### 5.5.5 task log
 XXL-JOB will generate a log file for every schedule request, the log info will be recorded by XxlJobLogger.log() method, the log file will be loaded when view log info through schedule center.
@@ -947,9 +947,9 @@ When start child thread in JobHandler, child thread will print log in parent Job
 ### 5.6 Communication module analysis
 
 #### 5.6.1 A complete task schedule communication process
-    - 1,schedule center send http request to executor, and the service in executor in fact is a jetty server with default port 9999.
+    - 1,schedule center send http request to executor, and the com.open.rule.service in executor in fact is a jetty server with default port 9999.
     - 2,executor execute task logic.
-    - 3,executor http callback with schedule center for schedule result, the service in schedule center used to receive callback request from executor is a set of api opended to executor.
+    - 3,executor http callback with schedule center for schedule result, the com.open.rule.service in schedule center used to receive callback request from executor is a set of api opended to executor.
 
 #### 5.6.2 Encrypt Communication data
 When scheduler center send request to executor, it will use RequestModel and ResponseModel object to encapsulate schedule request parameters and response data, these two object will be serialized before communication, data protocol and time stamp will be checked so that achieve data encryption target.
@@ -998,14 +998,14 @@ There are only two settings when communication between scheduler center and exec
 ### 5.11 Dispatching center API services
 The scheduling center provides API services for executors and business parties to choose to use, and the currently available API services are available.
 
-    1. Job result callback service;
-    2. Executor registration service;
+    1. Job result callback com.open.rule.service;
+    2. Executor registration com.open.rule.service;
     3. Executor registration remove services;
-    4. Triggers a single execution service, and support the task to be triggered according to the business event;
+    4. Triggers a single execution com.open.rule.service, and support the task to be triggered according to the business event;
 
-The scheduling center API service location: com.xxl.job.core.biz.AdminBiz.java
+The scheduling center API com.open.rule.service location: com.xxl.job.core.biz.AdminBiz.java
 
-The scheduling center API service requests reference code：com.xxl.job.adminbiz.AdminBizTest.java
+The scheduling center API com.open.rule.service requests reference code：com.xxl.job.adminbiz.AdminBizTest.java
 
 
 ## 6 Version update log
@@ -1013,7 +1013,7 @@ The scheduling center API service requests reference code：com.xxl.job.adminbiz
 **【since V1.1.x，XXL-JOB was used by company hiring me，alias Ferrari inner company，the latest version is recommended for new project】**
 - 1、simple:support CRUD operation through Web page, simple and one minute to get started;
 - 2、dynamic:support dynamic update task status,pause/recover task and effective in real time;
-- 3、service HA:task info stored in mysql, Job service support cluster to make sure service HA;
+- 3、com.open.rule.service HA:task info stored in mysql, Job com.open.rule.service support cluster to make sure com.open.rule.service HA;
 - 4、task HA:when some Job services hangs up, tasks will be assigned to some other alive machines, if all nodes of the cluster hangs up,  it will  compensate for the execution of lost task when restart;
 - 5、one task instance will only be executed on one executor;
 - 6、task is executed serially;
@@ -1186,7 +1186,7 @@ Tips: V1.3.x release has been published , enter the maintenance phase, branch  a
 
 ### 6.17 version V1.8.0 New features [2017-07-17]
 - 1、optimize update logic of task Cron，instead of rescheduleJob，at the same time preventing set cron repeatedly;
-- 2、optimize API callback service failed status code，facilitate troubleshooting;
+- 2、optimize API callback com.open.rule.service failed status code，facilitate troubleshooting;
 - 3、XxlJobLogger support multi-parameter;
 - 4、route policy add "忙碌转移" mode:Perform idle detection in sequence，The first idle test successfully machine is selected as the target executor and trigger schedule;
 - 5、reconstruct route policy code;
@@ -1203,8 +1203,8 @@ Tips: V1.3.x release has been published , enter the maintenance phase, branch  a
 - 3、executor JobHandler disables name conflicts;
 - 4、executor cluster address list for natural sorting;
 - 5、add test cases and optimize DAO layer code for Scheduling center;
-- 6、schedule Center API service change to self-study RPC framework to u nify communication model;
-- 7、add schedule center API service test Demo, convenient in dispatch center API extension and testing;
+- 6、schedule Center API com.open.rule.service change to self-study RPC framework to u nify communication model;
+- 7、add schedule center API com.open.rule.service test Demo, convenient in dispatch center API extension and testing;
 - 8、Task list page interaction optimization，The task list is automatically refreshed when the executor group is replaced，create new job defaults to locate current executor position;
 - 9、access Token:To improve system security，it is used for safety check between schedule center and executor, communication allowed just when Both Access Token matched;
 - 10、upgrade springboot version to 1.5.6.RELEASE of executor;

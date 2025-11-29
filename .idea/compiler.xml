@@ -13,25 +13,32 @@
         <module name="RabbitMQDemo" />
         <module name="ToolDemo" />
         <module name="OfficeDemo" />
+        <module name="ImageDemo" />
         <module name="RedisDemo" />
         <module name="RocketMQDemo" />
-        <module name="ImageDemo" />
-        <module name="CodeGenerateRyDemo" />
         <module name="xxl-job-frame" />
         <module name="LeetCodeDemo" />
-        <module name="CodeGenerateDemo" />
         <module name="MysqlDemo" />
+        <module name="ApachePoiDemp" />
         <module name="MongodbDemo" />
+        <module name="RuleEngineDemo" />
         <module name="ActivitiDemo" />
         <module name="NettyDemo" />
         <module name="ScheduledTaskDemo" />
         <module name="WebSocketDemo" />
-        <module name="JavaBaseToolDemo" />
-        <module name="EasyExcelDemo" />
         <module name="xxl-job-admin" />
+        <module name="EasyExcelDemo" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="ApachePoiDemo" target="1.8" />
+      <module name="ApachePOIDemo" target="1.8" />
+      <module name="CodeGenerateDemo" target="1.8" />
+      <module name="CodeGenerateRyDemo" target="1.8" />
+      <module name="CreateDemo" target="1.8" />
+      <module name="CreateDemoThree" target="1.8" />
+      <module name="CreateDemTwo" target="1.8" />
+      <module name="JavaBaseToolDemo" target="1.8" />
       <module name="untitled" target="1.8" />
       <module name="xxl-job-executor-sample-frameless" target="1.8" />
       <module name="xxl-job-executor-sample-springboot" target="1.8" />
