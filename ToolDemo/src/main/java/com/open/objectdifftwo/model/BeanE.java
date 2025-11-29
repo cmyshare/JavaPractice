@@ -1,6 +1,6 @@
 package com.open.objectdifftwo.model;
 
-import com.open.javabasetool.objectdifftwo.DiffLog;
+import com.open.objectdifftwo.DiffLog;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

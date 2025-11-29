@@ -1,12 +1,10 @@
 package com.open.objectdifftwo;
 
-import com.alibaba.fastjson2.JSON;
-import com.open.javabasetool.objectdifftwo.BaseObjectDiff;
-import com.open.javabasetool.objectdifftwo.ChineseObjectDiff;
-import com.open.javabasetool.objectdifftwo.model.BeanA;
-import com.open.javabasetool.objectdifftwo.model.BeanB;
-import com.open.javabasetool.objectdifftwo.model.BeanC;
-import com.open.javabasetool.objectdifftwo.model.BeanE;
+import com.alibaba.fastjson.JSON;
+import com.open.objectdifftwo.model.BeanA;
+import com.open.objectdifftwo.model.BeanB;
+import com.open.objectdifftwo.model.BeanC;
+import com.open.objectdifftwo.model.BeanE;
 import lombok.Data;
 
 import java.util.ArrayList;

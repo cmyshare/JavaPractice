@@ -1,6 +1,5 @@
 package com.open.objectdifftwo;
 
-import com.open.javabasetool.objectdifftwo.BaseDifference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,5 @@
 package com.open.objectdiffone;
 
-import com.open.javabasetool.objectdiffone.User;
 import lombok.Data;
 import org.apache.commons.lang3.builder.DiffBuilder;
 import org.apache.commons.lang3.builder.DiffResult;

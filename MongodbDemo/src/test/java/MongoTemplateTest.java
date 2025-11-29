@@ -1,9 +1,8 @@
-package com.open.mongodb.template;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.model.IndexModel;
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import com.open.mongodb.template.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,11 +14,9 @@ import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.data.util.Pair;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 /**
  * @version 1.0

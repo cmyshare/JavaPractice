@@ -1,6 +1,5 @@
 package com.open.objectdiffone;
 
-import com.open.javabasetool.objectdiffone.Student;
 import lombok.Data;
 
 import java.util.List;

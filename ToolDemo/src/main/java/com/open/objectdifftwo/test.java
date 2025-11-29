@@ -1,7 +1,7 @@
 package com.open.objectdifftwo;
 
-import com.open.javabasetool.objectdifftwo.model.BeanB;
-import com.open.javabasetool.objectdifftwo.model.BeanC;
+import com.open.objectdifftwo.model.BeanB;
+import com.open.objectdifftwo.model.BeanC;
 
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
