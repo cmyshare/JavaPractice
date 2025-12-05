@@ -5,7 +5,10 @@ import com.alibaba.qlexpress4.InitOptions;
 import com.alibaba.qlexpress4.QLOptions;
 import com.alibaba.qlexpress4.QLResult;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * QLExpress 表达式工具类（Java 8 兼容）
@@ -95,5 +98,62 @@ public final class QLExpressUtils {
     public static void compileExpression(String expression) throws Exception {
         RUNNER.parseToDefinitionWithCache(expression);
     }
+
+    /**
+     * 从表达式中提取所有需要外部传入的变量名
+     * 类似QLExpress的getOutVarNames功能
+     *
+     * @param expression 表达式字符串
+     * @return 未定义变量名集合
+     */
+    public static Set<String> provideVariableOne(String expression) {
+        if (expression == null || expression.trim().isEmpty()) {
+            return Collections.emptySet();
+        }
+
+        try {
+            return RUNNER.getOutVarNames(expression);
+        } catch (Exception e) {
+            throw new RuntimeException("表达式分析失败: " +  e);
+        }
+    }
+
+    /**
+     * 从表达式中提取所有使用的外部函数名
+     * 类似QLExpress的getOutFunctions功能
+     *
+     * @param expression 表达式字符串
+     * @return 函数名集合
+     */
+    public static Set<String> provideVariableTwo(String expression) {
+        if (expression == null || expression.trim().isEmpty()) {
+            return Collections.emptySet();
+        }
+
+        try {
+            return RUNNER.getOutFunctions(expression);
+        } catch (Exception e) {
+            throw new RuntimeException("表达式分析失败: " + e);
+        }
+    }
+
+    ///**
+    // * 从表达式中提取所有使用的变量属性
+    // * 类似QLExpress的getOutVarAttrs功能 (如 user.name 中的 "name")
+    // *
+    // * @param expression 表达式字符串
+    // * @return 变量属性集合
+    // */
+    //public static Set<String> provideVariableThree(String expression) {
+    //    if (expression == null || expression.trim().isEmpty()) {
+    //        return Collections.emptySet();
+    //    }
+    //
+    //    try {
+    //        return RUNNER.getOutVarAttrs(expression);
+    //    } catch (Exception e) {
+    //        throw new RuntimeException("表达式分析失败: " +  e);
+    //    }
+    //}
 
 }
