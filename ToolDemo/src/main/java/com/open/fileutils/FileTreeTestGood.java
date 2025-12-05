@@ -1,7 +1,5 @@
 package com.open.fileutils;
 
-import com.open.javabasetool.fileutils.CustomFileUtils;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

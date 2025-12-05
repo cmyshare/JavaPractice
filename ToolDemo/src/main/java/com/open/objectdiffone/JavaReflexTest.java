@@ -1,8 +1,5 @@
 package com.open.objectdiffone;
 
-import com.open.javabasetool.objectdiffone.Student;
-import com.open.javabasetool.objectdiffone.User;
-
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;

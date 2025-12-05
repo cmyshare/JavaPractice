@@ -34,6 +34,18 @@
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <!--
+    <dependencyManagement>的作用：
+    只负责版本管理，不实际引入依赖
+    为子项目提供依赖版本的统一配置
+    解决的是"依赖版本由谁决定"的问题，而不是"哪些依赖会被包含"的问题
+
+    为什么子工程报没有依赖：
+    即使父工程在<dependencyManagement>中定义了这些依赖，子工程仍然需要在自己的<dependencies>中显式声明需要使用的依赖
+    这是Maven设计的基本原则，确保每个模块只包含自己真正需要的依赖
+    -->
+
+    <!-- 保留dependencyManagement中的版本管理 -->
     <!--微服务三大基础依赖Boot、Cloud、Cloud Alibaba-->
     <dependencyManagement>
         <dependencies>
@@ -63,5 +75,37 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+
+    <!-- 添加dependencies标签引入公共工具 -->
+    <dependencies>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.83</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.26</version>
+        </dependency>
+        <!-- hutool 的依赖配置-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.8.26</version> <!-- 使用最新稳定版本 -->
+        </dependency>
+        <!-- Apache Lang3 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.18.0</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+        </dependency>
+    </dependencies>
 
 </project>
