@@ -7,7 +7,7 @@ import java.util.List;
  * @author CmyShare
  * @date 2026/1/1
  */
-public class copytreeTest {
+public class TreeUtil2Test {
     public static void main(String[] args) {
         // 模拟四层 OKR 树（根 → L1 → L2 → L3）
         List<HrmsOkrInfo> sourceList = Arrays.asList(
@@ -31,7 +31,7 @@ public class copytreeTest {
         sourceList.forEach(System.out::println);
 
         // 调用复制工具（使用你前面定义的 TreeCopyUtils）
-        List<HrmsOkrInfo> newList = TreeUtil.copyOkrTree(sourceList);
+        List<HrmsOkrInfo> newList = TreeUtil1.copyOkrTree(sourceList);
 
         System.out.println("\n=== 复制后的新数据 ===");
         newList.forEach(System.out::println);

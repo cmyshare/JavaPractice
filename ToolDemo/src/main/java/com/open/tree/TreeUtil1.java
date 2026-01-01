@@ -14,7 +14,7 @@ import java.util.function.Supplier;
  * @Date 2024/8/30 15:02
  * @desc 树形结构转换工具类
  */
-public class TreeUtil {
+public class TreeUtil1 {
 
     /*************************************列表方案*********************************************/
 
